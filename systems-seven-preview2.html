@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #050810;
+  width: 1400px;
+  height: 900px;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500&display=swap');
+
+.scene {
+  width: 1380px;
+  height: 880px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+/* Background grid */
+.scene::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* Ambient glow */
+.scene::after {
+  content: '';
+  position: absolute;
+  top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(59,130,246,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Top label */
+.top-bar {
+  position: absolute;
+  top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1100px;
+  z-index: 10;
+}
+
+.sys-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.4);
+}
+
+.sys-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: rgba(100,181,246,0.3);
+}
+
+.blink {
+  width: 5px; height: 5px;
+  background: #4CAF50;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #4CAF50;
+  animation: blink 2s infinite;
+}
+
+/* Main monitor */
+.monitor {
+  width: 1100px;
+  height: 720px;
+  background: #070D17;
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(59,130,246,0.08),
+    0 40px 120px rgba(0,0,0,0.9),
+    inset 0 1px 0 rgba(59,130,246,0.1);
+}
+
+/* Monitor header */
+.mon-header {
+  background: linear-gradient(135deg, #0B1628 0%, #0D1F3C 100%);
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(59,130,246,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mon-title-wrap { display: flex; flex-direction: column; gap: 2px; }
+
+.mon-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64B5F6;
+}
+
+.mon-sub {
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.35);
+}
+
+.mon-tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.mon-tab {
+  padding: 6px 16px;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.35);
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.mon-tab.active {
+  color: #64B5F6;
+  background: rgba(59,130,246,0.08);
+  border-color: rgba(59,130,246,0.2);
+}
+
+/* Monitor body */
+.mon-body {
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 16px;
+  height: calc(100% - 56px);
+}
+
+/* Gauge row */
+.gauge-section {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.big-gauge {
+  flex: 1;
+  background: #060C16;
+  border: 1px solid rgba(59,130,246,0.1);
+  border-radius: 8px;
+  padding: 16px 12px 12px;
+  text-align: center;
+  position: relative;
+}
+
+.big-gauge.fleet {
+  border-color: rgba(59,130,246,0.25);
+  background: rgba(59,130,246,0.03);
+}
+
+.gauge-name {
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.4);
+  margin-bottom: 8px;
+}
+
+.arc-wrap {
+  width: 80px; height: 46px;
+  margin: 0 auto 6px;
+}
+
+.arc-wrap svg { width: 100%; height: 100%; }
+
+.gauge-pct {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 18px;
+  color: #64B5F6;
+}
+
+.gauge-emoji {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 3px;
+}
+
+/* Mission panels */
+.mission-panel {
+  background: #060C16;
+  border: 1px solid rgba(59,130,246,0.1);
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.mp-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(59,130,246,0.08);
+}
+
+.mp-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.mp-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #E0E0E0;
+}
+
+.mp-code {
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.4);
+  margin-top: 1px;
+}
+
+.mp-task {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(59,130,246,0.04);
+  font-size: 9px;
+  color: rgba(176,190,197,0.7);
+}
+
+.mp-task:last-of-type { border-bottom: none; }
+
+.task-indicator {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mp-bar-wrap { margin-top: 10px; }
+.mp-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 7px;
+  color: rgba(100,181,246,0.35);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.mp-bar {
+  height: 4px;
+  background: rgba(59,130,246,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.mp-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+/* Status board */
+.status-board {
+  background: #060C16;
+  border: 1px solid rgba(59,130,246,0.1);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.sb-title {
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.35);
+  margin-bottom: 12px;
+}
+
+.sb-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.sb-lamp {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 8px;
+  background: rgba(59,130,246,0.03);
+  border: 1px solid rgba(59,130,246,0.07);
+  border-radius: 5px;
+}
+
+.lamp-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sb-lamp-name {
+  font-size: 8px;
+  color: #B0BEC5;
+}
+
+/* Verse panel */
+.verse-panel {
+  grid-column: 1 / -1;
+  background: rgba(59,130,246,0.03);
+  border: 1px solid rgba(59,130,246,0.08);
+  border-radius: 8px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.verse-label {
+  font-size: 7.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.3);
+  white-space: nowrap;
+}
+
+.verse-text {
+  font-size: 9.5px;
+  font-style: italic;
+  color: rgba(100,181,246,0.6);
+  line-height: 1.5;
+}
+
+.verse-ref {
+  font-size: 8px;
+  color: rgba(100,181,246,0.3);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* Bottom label */
+.bottom-label {
+  position: absolute;
+  bottom: 20px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.08);
+  z-index: 10;
+}
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="top-bar">
+    <div class="sys-title">Systems Seven · Family Operating System</div>
+    <div class="sys-status">
+      <div class="blink"></div>
+      LIVE · Firebase · PWA · stewartjm-dev.github.io
+    </div>
+  </div>
+
+  <div class="monitor">
+    <div class="mon-header">
+      <div class="mon-title-wrap">
+        <div class="mon-title">The Bridge</div>
+        <div class="mon-sub">John's Command Center · Stewart Family · Virescit Vulnere Virtus</div>
+      </div>
+      <div class="mon-tabs">
+        <div class="mon-tab active">Helm</div>
+        <div class="mon-tab">Comms</div>
+        <div class="mon-tab">Instruments</div>
+        <div class="mon-tab">Saga</div>
+        <div class="mon-tab">Word</div>
+      </div>
+    </div>
+
+    <div class="mon-body">
+
+      <!-- Gauge Row -->
+      <div class="gauge-section">
+        <div class="big-gauge">
+          <div class="gauge-name">Alpha</div>
+          <span class="gauge-emoji">🦅</span>
+          <div class="arc-wrap">
+            <svg viewBox="0 0 80 46">
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#0D1F3C" stroke-width="6" fill="none"/>
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#2196F3" stroke-width="6" fill="none" stroke-dasharray="101" stroke-dashoffset="25"/>
+            </svg>
+          </div>
+          <div class="gauge-pct" style="color:#2196F3;">75%</div>
+        </div>
+        <div class="big-gauge">
+          <div class="gauge-name">Bravo</div>
+          <span class="gauge-emoji">🦁</span>
+          <div class="arc-wrap">
+            <svg viewBox="0 0 80 46">
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#0D1F3C" stroke-width="6" fill="none"/>
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#4CAF50" stroke-width="6" fill="none" stroke-dasharray="101" stroke-dashoffset="16"/>
+            </svg>
+          </div>
+          <div class="gauge-pct" style="color:#4CAF50;">84%</div>
+        </div>
+        <div class="big-gauge">
+          <div class="gauge-name">Dino</div>
+          <span class="gauge-emoji">🦖</span>
+          <div class="arc-wrap">
+            <svg viewBox="0 0 80 46">
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#0D1F3C" stroke-width="6" fill="none"/>
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#FF9800" stroke-width="6" fill="none" stroke-dasharray="101" stroke-dashoffset="40"/>
+            </svg>
+          </div>
+          <div class="gauge-pct" style="color:#FF9800;">60%</div>
+        </div>
+        <div class="big-gauge">
+          <div class="gauge-name">Wildcard</div>
+          <span class="gauge-emoji">🐘</span>
+          <div class="arc-wrap">
+            <svg viewBox="0 0 80 46">
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#0D1F3C" stroke-width="6" fill="none"/>
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#E91E63" stroke-width="6" fill="none" stroke-dasharray="101" stroke-dashoffset="51"/>
+            </svg>
+          </div>
+          <div class="gauge-pct" style="color:#E91E63;">49%</div>
+        </div>
+        <div class="big-gauge fleet">
+          <div class="gauge-name">Fleet Readiness</div>
+          <span class="gauge-emoji">⚓</span>
+          <div class="arc-wrap">
+            <svg viewBox="0 0 80 46">
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#0D1F3C" stroke-width="7" fill="none"/>
+              <path d="M8 40 A32 32 0 0 1 72 40" stroke="#64B5F6" stroke-width="7" fill="none" stroke-dasharray="101" stroke-dashoffset="33"/>
+            </svg>
+          </div>
+          <div class="gauge-pct">67%</div>
+        </div>
+      </div>
+
+      <!-- Mission Panel Alpha -->
+      <div class="mission-panel">
+        <div class="mp-header">
+          <div class="mp-avatar" style="background:rgba(33,150,243,0.15);">🦅</div>
+          <div>
+            <div class="mp-name">Samuel</div>
+            <div class="mp-code">Agent Alpha · Active Mission</div>
+          </div>
+        </div>
+        <div class="mp-task"><div class="task-indicator" style="background:#4CAF50;"></div>Morning devotional complete</div>
+        <div class="mp-task"><div class="task-indicator" style="background:#4CAF50;"></div>History lesson done</div>
+        <div class="mp-task"><div class="task-indicator" style="background:#FF9800;"></div>Math — in progress</div>
+        <div class="mp-task"><div class="task-indicator" style="background:#333;"></div>Evening reading pending</div>
+        <div class="mp-bar-wrap">
+          <div class="mp-bar-label"><span>Mission Progress</span><span>75%</span></div>
+          <div class="mp-bar"><div class="mp-fill" style="width:75%;background:#2196F3;"></div></div>
+        </div>
+      </div>
+
+      <!-- Mission Panel Bravo -->
+      <div class="mission-panel">
+        <div class="mp-header">
+          <div class="mp-avatar" style="background:rgba(76,175,80,0.15);">🦁</div>
+          <div>
+            <div class="mp-name">John Jr.</div>
+            <div class="mp-code">Agent Bravo · Active Mission</div>
+          </div>
+        </div>
+        <div class="mp-task"><div class="task-indicator" style="background:#4CAF50;"></div>Morning chores complete</div>
+        <div class="mp-task"><div class="task-indicator" style="background:#4CAF50;"></div>Reading done</div>
+        <div class="mp-task"><div class="task-indicator" style="background:#4CAF50;"></div>Science complete</div>
+        <div class="mp-task"><div class="task-indicator" style="background:#333;"></div>Instrument practice pending</div>
+        <div class="mp-bar-wrap">
+          <div class="mp-bar-label"><span>Mission Progress</span><span>84%</span></div>
+          <div class="mp-bar"><div class="mp-fill" style="width:84%;background:#4CAF50;"></div></div>
+        </div>
+      </div>
+
+      <!-- Status Board -->
+      <div class="status-board">
+        <div class="sb-title">System Status Board</div>
+        <div class="sb-grid">
+          <div class="sb-lamp"><div class="lamp-dot" style="background:#4CAF50;box-shadow:0 0 6px #4CAF50;"></div><span class="sb-lamp-name">Daily Watch</span></div>
+          <div class="sb-lamp"><div class="lamp-dot" style="background:#FFB300;box-shadow:0 0 6px #FFB300;"></div><span class="sb-lamp-name">Saga Cadence</span></div>
+          <div class="sb-lamp"><div class="lamp-dot" style="background:#2196F3;box-shadow:0 0 6px #2196F3;"></div><span class="sb-lamp-name">Family Night</span></div>
+          <div class="sb-lamp"><div class="lamp-dot" style="background:#4CAF50;box-shadow:0 0 6px #4CAF50;"></div><span class="sb-lamp-name">Devotional</span></div>
+          <div class="sb-lamp"><div class="lamp-dot" style="background:#4CAF50;box-shadow:0 0 6px #4CAF50;"></div><span class="sb-lamp-name">Troop Comms</span></div>
+          <div class="sb-lamp"><div class="lamp-dot" style="background:#E91E63;box-shadow:0 0 6px #E91E63;"></div><span class="sb-lamp-name">Vineyard</span></div>
+        </div>
+      </div>
+
+      <!-- Verse -->
+      <div class="verse-panel">
+        <div class="verse-label">Family Verse</div>
+        <div class="verse-text">"The LORD shall fight for you, and ye shall hold your peace."</div>
+        <div class="verse-ref">Exodus 14:14 · KJV</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="bottom-label">Systems Seven · Firebase · PWA · Six Interconnected Apps · Stewart Family</div>
+</div>
+</body>
+</html>
