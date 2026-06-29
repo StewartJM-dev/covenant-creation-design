@@ -271,7 +271,7 @@
 
     /* ── SYSTEMS SEVEN SHOWCASE ── */
     #systems-seven {
-      background: var(--black-mid);
+      background: #0E0C08;
       border-top: 1px solid var(--border-gold);
       border-bottom: 1px solid var(--border-gold);
     }
@@ -312,13 +312,29 @@
     .ss-previews {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 2.5rem;
     }
 
     .ss-preview-card {
-      background: var(--black-card);
-      border: 1px solid var(--border-gold);
+      background: #1A1400;
+      border: 1px solid rgba(201,168,76,0.35);
       overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    .ss-preview-card::before {
+      content: '';
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .ss-preview-card img {
+      display: block;
+      width: calc(100% - 24px);
+      margin: 12px auto;
+      border: 1px solid rgba(255,255,255,0.06);
     }
 
 .ss-preview-label {
