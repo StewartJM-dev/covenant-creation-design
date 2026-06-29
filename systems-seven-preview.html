@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Systems Seven Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0A0A0A;
+  width: 1400px;
+  height: 900px;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene {
+  width: 1380px;
+  height: 880px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+/* Ambient glow */
+.scene::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; height: 400px;
+  background: radial-gradient(ellipse, rgba(59,130,246,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* PHONE FRAME */
+.phone {
+  width: 220px;
+  height: 440px;
+  background: #111;
+  border-radius: 32px;
+  border: 2px solid #2A2A2A;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px #1A1A1A;
+  flex-shrink: 0;
+}
+
+.phone-notch {
+  width: 70px; height: 18px;
+  background: #0A0A0A;
+  border-radius: 0 0 12px 12px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* TABLET FRAME */
+.tablet {
+  width: 520px;
+  height: 680px;
+  background: #111;
+  border-radius: 20px;
+  border: 2px solid #2A2A2A;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px #1A1A1A;
+  flex-shrink: 0;
+}
+
+/* THE BRIDGE — Tablet */
+.bridge {
+  width: 100%; height: 100%;
+  background: #0D1117;
+  display: flex;
+  flex-direction: column;
+}
+
+.bridge-header {
+  background: linear-gradient(135deg, #0D1B2A 0%, #112240 100%);
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid rgba(59,130,246,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bridge-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64B5F6;
+}
+
+.bridge-subtitle {
+  font-size: 8px;
+  color: rgba(100,181,246,0.5);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.status-dot {
+  width: 6px; height: 6px;
+  background: #4CAF50;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #4CAF50;
+}
+
+.bridge-tabs {
+  display: flex;
+  background: #0A0F1A;
+  border-bottom: 1px solid rgba(59,130,246,0.1);
+}
+
+.tab {
+  padding: 7px 12px;
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.4);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+  color: #64B5F6;
+  border-bottom-color: #64B5F6;
+  background: rgba(59,130,246,0.05);
+}
+
+.bridge-body {
+  flex: 1;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 8px;
+  overflow: hidden;
+}
+
+/* Gauges */
+.gauge-row {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+}
+
+.gauge {
+  flex: 1;
+  background: #0A0F1A;
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 6px;
+  padding: 8px;
+  text-align: center;
+}
+
+.gauge-label {
+  font-size: 6px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.5);
+  margin-bottom: 4px;
+}
+
+.gauge-arc {
+  width: 48px; height: 28px;
+  margin: 0 auto 4px;
+  position: relative;
+}
+
+.gauge-arc svg { width: 100%; height: 100%; }
+
+.gauge-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: #64B5F6;
+}
+
+/* Status panel */
+.status-panel {
+  background: #0A0F1A;
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.panel-title {
+  font-size: 6.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(100,181,246,0.5);
+  margin-bottom: 6px;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(59,130,246,0.05);
+}
+
+.status-row:last-child { border-bottom: none; }
+
+.status-name {
+  font-size: 7px;
+  color: #B0BEC5;
+}
+
+.lamp {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+
+.lamp.green { background: #4CAF50; box-shadow: 0 0 5px #4CAF50; }
+.lamp.amber { background: #FFB300; box-shadow: 0 0 5px #FFB300; }
+.lamp.blue  { background: #2196F3; box-shadow: 0 0 5px #2196F3; }
+
+/* Mission cards */
+.mission-card {
+  background: #0A0F1A;
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.mission-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.agent-badge {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7px;
+  font-weight: 700;
+  color: #0A0F1A;
+  flex-shrink: 0;
+}
+
+.mission-name {
+  font-size: 7.5px;
+  font-weight: 600;
+  color: #E0E0E0;
+}
+
+.mission-codename {
+  font-size: 6px;
+  color: rgba(100,181,246,0.5);
+  letter-spacing: 0.1em;
+}
+
+.progress-bar {
+  height: 3px;
+  background: rgba(59,130,246,0.1);
+  border-radius: 2px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.task-list { margin-top: 4px; }
+.task {
+  font-size: 6px;
+  color: rgba(176,190,197,0.7);
+  padding: 2px 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.task-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* PHONE 1 — Homestead */
+.homestead {
+  width: 100%; height: 100%;
+  background: #1A0A00;
+  display: flex;
+  flex-direction: column;
+}
+
+.homestead-header {
+  background: linear-gradient(135deg, #2D1500 0%, #3D1F00 100%);
+  padding: 20px 12px 8px;
+  border-bottom: 1px solid rgba(212,130,10,0.2);
+}
+
+.homestead-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #D4820A;
+}
+
+.homestead-sub {
+  font-size: 6.5px;
+  color: rgba(212,130,10,0.5);
+  margin-top: 1px;
+  letter-spacing: 0.1em;
+}
+
+.homestead-body {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.hw-card {
+  background: rgba(212,130,10,0.06);
+  border: 1px solid rgba(212,130,10,0.15);
+  border-radius: 6px;
+  padding: 7px 9px;
+}
+
+.hw-card-title {
+  font-size: 6.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #D4820A;
+  margin-bottom: 4px;
+}
+
+.hw-item {
+  font-size: 6.5px;
+  color: rgba(212,130,10,0.7);
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(212,130,10,0.05);
+  display: flex;
+  justify-content: space-between;
+}
+.hw-item:last-child { border-bottom: none; }
+
+.hw-check {
+  width: 8px; height: 8px;
+  border: 1px solid rgba(212,130,10,0.3);
+  border-radius: 2px;
+}
+
+.hw-check.done {
+  background: #D4820A;
+  border-color: #D4820A;
+}
+
+/* PHONE 2 — OWCA */
+.owca {
+  width: 100%; height: 100%;
+  background: #0A1A0A;
+  display: flex;
+  flex-direction: column;
+}
+
+.owca-header {
+  background: linear-gradient(135deg, #051205 0%, #0A1F0A 100%);
+  padding: 20px 12px 8px;
+  border-bottom: 1px solid rgba(76,175,80,0.2);
+}
+
+.owca-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #4CAF50;
+}
+
+.owca-sub {
+  font-size: 6.5px;
+  color: rgba(76,175,80,0.5);
+  margin-top: 1px;
+  letter-spacing: 0.1em;
+}
+
+.owca-body {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.agent-card {
+  background: rgba(76,175,80,0.05);
+  border: 1px solid rgba(76,175,80,0.15);
+  border-radius: 6px;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.agent-avatar {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 700;
+  color: #0A1A0A;
+  flex-shrink: 0;
+}
+
+.agent-info { flex: 1; }
+
+.agent-name {
+  font-size: 7.5px;
+  font-weight: 600;
+  color: #E8F5E9;
+}
+
+.agent-code {
+  font-size: 6px;
+  color: rgba(76,175,80,0.6);
+  letter-spacing: 0.08em;
+}
+
+.agent-bar {
+  height: 3px;
+  background: rgba(76,175,80,0.1);
+  border-radius: 2px;
+  margin-top: 3px;
+  overflow: hidden;
+}
+
+.agent-fill {
+  height: 100%;
+  background: #4CAF50;
+  border-radius: 2px;
+}
+
+/* Label */
+.preview-label {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.12);
+  white-space: nowrap;
+}
+</style>
+</head>
+<body>
+<div class="scene">
+
+  <!-- PHONE LEFT — The Homestead -->
+  <div class="phone" style="transform: perspective(800px) rotateY(12deg) rotateX(2deg); margin-top: 60px;">
+    <div class="phone-notch"></div>
+    <div class="homestead">
+      <div class="homestead-header">
+        <div class="homestead-title">The Homestead</div>
+        <div class="homestead-sub">Dawn's Command Center</div>
+      </div>
+      <div class="homestead-body">
+        <div class="hw-card">
+          <div class="hw-card-title">Today's Schedule</div>
+          <div class="hw-item"><span>Morning devotional</span><div class="hw-check done"></div></div>
+          <div class="hw-item"><span>History — Samuel</span><div class="hw-check done"></div></div>
+          <div class="hw-item"><span>Math — John Jr.</span><div class="hw-check"></div></div>
+          <div class="hw-item"><span>Reading — Stephen</span><div class="hw-check"></div></div>
+          <div class="hw-item"><span>Troop planning</span><div class="hw-check"></div></div>
+        </div>
+        <div class="hw-card">
+          <div class="hw-card-title">Household</div>
+          <div class="hw-item"><span>Grocery list</span><div class="hw-check done"></div></div>
+          <div class="hw-item"><span>Menu this week</span><div class="hw-check"></div></div>
+          <div class="hw-item"><span>Laundry rotation</span><div class="hw-check"></div></div>
+        </div>
+        <div class="hw-card">
+          <div class="hw-card-title">Family Verse</div>
+          <div style="font-size:6.5px;color:rgba(212,130,10,0.8);line-height:1.5;font-style:italic;">"The LORD shall fight for you, and ye shall hold your peace."<br><span style="opacity:0.5;">— Exodus 14:14</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLET CENTER — The Bridge -->
+  <div class="tablet">
+    <div class="bridge">
+      <div class="bridge-header">
+        <div>
+          <div class="bridge-title">Systems Seven — The Bridge</div>
+          <div class="bridge-subtitle">Stewart Family Command · John's Helm</div>
+        </div>
+        <div class="status-dot"></div>
+      </div>
+      <div class="bridge-tabs">
+        <div class="tab active">Helm</div>
+        <div class="tab">Comms</div>
+        <div class="tab">Instruments</div>
+        <div class="tab">Saga</div>
+        <div class="tab">Word</div>
+      </div>
+      <div class="bridge-body">
+
+        <!-- Gauges -->
+        <div class="gauge-row">
+          <div class="gauge">
+            <div class="gauge-label">Alpha</div>
+            <div class="gauge-arc">
+              <svg viewBox="0 0 48 28">
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#1A2A3A" stroke-width="4" fill="none"/>
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#2196F3" stroke-width="4" fill="none" stroke-dasharray="63" stroke-dashoffset="16"/>
+              </svg>
+            </div>
+            <div class="gauge-value">75%</div>
+          </div>
+          <div class="gauge">
+            <div class="gauge-label">Bravo</div>
+            <div class="gauge-arc">
+              <svg viewBox="0 0 48 28">
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#1A2A3A" stroke-width="4" fill="none"/>
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#4CAF50" stroke-width="4" fill="none" stroke-dasharray="63" stroke-dashoffset="10"/>
+              </svg>
+            </div>
+            <div class="gauge-value">84%</div>
+          </div>
+          <div class="gauge">
+            <div class="gauge-label">Dino</div>
+            <div class="gauge-arc">
+              <svg viewBox="0 0 48 28">
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#1A2A3A" stroke-width="4" fill="none"/>
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#FF9800" stroke-width="4" fill="none" stroke-dasharray="63" stroke-dashoffset="25"/>
+              </svg>
+            </div>
+            <div class="gauge-value">60%</div>
+          </div>
+          <div class="gauge">
+            <div class="gauge-label">Wildcard</div>
+            <div class="gauge-arc">
+              <svg viewBox="0 0 48 28">
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#1A2A3A" stroke-width="4" fill="none"/>
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#E91E63" stroke-width="4" fill="none" stroke-dasharray="63" stroke-dashoffset="32"/>
+              </svg>
+            </div>
+            <div class="gauge-value">49%</div>
+          </div>
+          <div class="gauge" style="border-color:rgba(59,130,246,0.3);">
+            <div class="gauge-label">Fleet</div>
+            <div class="gauge-arc">
+              <svg viewBox="0 0 48 28">
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#1A2A3A" stroke-width="4" fill="none"/>
+                <path d="M4 24 A20 20 0 0 1 44 24" stroke="#64B5F6" stroke-width="4" fill="none" stroke-dasharray="63" stroke-dashoffset="13"/>
+              </svg>
+            </div>
+            <div class="gauge-value" style="color:#64B5F6;">67%</div>
+          </div>
+        </div>
+
+        <!-- Status Board -->
+        <div class="status-panel">
+          <div class="panel-title">System Status</div>
+          <div class="status-row"><span class="status-name">Daily Watch</span><div class="lamp green"></div></div>
+          <div class="status-row"><span class="status-name">Saga Cadence</span><div class="lamp amber"></div></div>
+          <div class="status-row"><span class="status-name">Family Night</span><div class="lamp blue"></div></div>
+          <div class="status-row"><span class="status-name">Devotional</span><div class="lamp green"></div></div>
+          <div class="status-row"><span class="status-name">Troop Comms</span><div class="lamp green"></div></div>
+        </div>
+
+        <!-- Alpha Card -->
+        <div class="mission-card">
+          <div class="mission-header">
+            <div class="agent-badge" style="background:#2196F3;">🦅</div>
+            <div>
+              <div class="mission-name">Samuel</div>
+              <div class="mission-codename">AGENT ALPHA</div>
+            </div>
+          </div>
+          <div class="task-list">
+            <div class="task"><div class="task-dot" style="background:#4CAF50;"></div>Morning chores complete</div>
+            <div class="task"><div class="task-dot" style="background:#4CAF50;"></div>History lesson done</div>
+            <div class="task"><div class="task-dot" style="background:#FF9800;"></div>Math — in progress</div>
+            <div class="task"><div class="task-dot" style="background:#444;"></div>Evening reading pending</div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:75%;background:#2196F3;"></div></div>
+        </div>
+
+        <!-- Bravo Card -->
+        <div class="mission-card">
+          <div class="mission-header">
+            <div class="agent-badge" style="background:#4CAF50;">🦁</div>
+            <div>
+              <div class="mission-name">John Jr.</div>
+              <div class="mission-codename">AGENT BRAVO</div>
+            </div>
+          </div>
+          <div class="task-list">
+            <div class="task"><div class="task-dot" style="background:#4CAF50;"></div>Morning chores complete</div>
+            <div class="task"><div class="task-dot" style="background:#4CAF50;"></div>Reading done</div>
+            <div class="task"><div class="task-dot" style="background:#4CAF50;"></div>Science complete</div>
+            <div class="task"><div class="task-dot" style="background:#444;"></div>Instrument practice pending</div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:84%;background:#4CAF50;"></div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PHONE RIGHT — Agent HQ -->
+  <div class="phone" style="transform: perspective(800px) rotateY(-12deg) rotateX(2deg); margin-top: 60px;">
+    <div class="phone-notch"></div>
+    <div class="owca">
+      <div class="owca-header">
+        <div class="owca-title">Agent HQ</div>
+        <div class="owca-sub">O.W.C.A. Field Operations</div>
+      </div>
+      <div class="owca-body">
+        <div class="agent-card">
+          <div class="agent-avatar" style="background:#2196F3;">🦅</div>
+          <div class="agent-info">
+            <div class="agent-name">Alpha — Samuel</div>
+            <div class="agent-code">Mission: 3 of 4 complete</div>
+            <div class="agent-bar"><div class="agent-fill" style="width:75%;"></div></div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-avatar" style="background:#4CAF50;">🦁</div>
+          <div class="agent-info">
+            <div class="agent-name">Bravo — John Jr.</div>
+            <div class="agent-code">Mission: 3 of 4 complete</div>
+            <div class="agent-bar"><div class="agent-fill" style="width:84%;background:#4CAF50;"></div></div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-avatar" style="background:#FF9800;">🦖</div>
+          <div class="agent-info">
+            <div class="agent-name">Dino — Stephen</div>
+            <div class="agent-code">Mission: 2 of 4 complete</div>
+            <div class="agent-bar"><div class="agent-fill" style="width:60%;background:#FF9800;"></div></div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-avatar" style="background:#E91E63;">🐘</div>
+          <div class="agent-info">
+            <div class="agent-name">Wildcard — Daniel</div>
+            <div class="agent-code">Mission: 2 of 4 complete</div>
+            <div class="agent-bar"><div class="agent-fill" style="width:49%;background:#E91E63;"></div></div>
+          </div>
+        </div>
+        <div style="margin-top:4px;background:rgba(76,175,80,0.05);border:1px solid rgba(76,175,80,0.15);border-radius:6px;padding:7px;">
+          <div style="font-size:6.5px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(76,175,80,0.5);margin-bottom:4px;">Today's Verse</div>
+          <div style="font-size:6.5px;color:rgba(76,175,80,0.8);font-style:italic;line-height:1.5;">"The LORD shall fight for you..."<br><span style="opacity:0.5;">Exodus 14:14</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-label">Systems Seven · Stewart Family Operating System · Firebase · PWA</div>
+</div>
+</body>
+</html>
