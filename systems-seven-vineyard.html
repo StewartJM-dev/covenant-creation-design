@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #060408;
+  width: 1400px;
+  height: 900px;
+  overflow: hidden;
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene {
+  width: 1380px;
+  height: 880px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+/* Warm ambient glow */
+.scene::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(139,90,43,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* PHONE FRAME */
+.phone {
+  width: 230px;
+  height: 460px;
+  background: #0D0810;
+  border-radius: 36px;
+  border: 2px solid #1E1520;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.85), 0 0 0 1px #140F18;
+  flex-shrink: 0;
+}
+
+.phone-notch {
+  width: 72px; height: 18px;
+  background: #060408;
+  border-radius: 0 0 12px 12px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* TABLET FRAME */
+.tablet {
+  width: 540px;
+  height: 720px;
+  background: #0D0810;
+  border-radius: 20px;
+  border: 2px solid #1E1520;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px #140F18;
+  flex-shrink: 0;
+}
+
+/* ── VINEYARD MAIN (TABLET) ── */
+.vineyard {
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #0D0810 0%, #110A14 50%, #0A080D 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.v-header {
+  background: linear-gradient(135deg, #1A0F1E 0%, #221226 100%);
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid rgba(139,90,43,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.v-title {
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+  color: #C9A84C;
+  letter-spacing: 0.05em;
+}
+
+.v-verse {
+  font-size: 7.5px;
+  color: rgba(201,168,76,0.4);
+  font-style: italic;
+  text-align: right;
+  max-width: 180px;
+  line-height: 1.5;
+}
+
+.v-tabs {
+  display: flex;
+  background: #0A0810;
+  border-bottom: 1px solid rgba(139,90,43,0.1);
+}
+
+.v-tab {
+  padding: 8px 14px;
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.3);
+  border-bottom: 2px solid transparent;
+  font-family: 'Georgia', serif;
+}
+
+.v-tab.active {
+  color: #C9A84C;
+  border-bottom-color: #C9A84C;
+  background: rgba(201,168,76,0.04);
+}
+
+.v-body {
+  flex: 1;
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* Spinning wheel */
+.wheel-card {
+  grid-column: 1 / -1;
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wheel-visual {
+  width: 90px; height: 90px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.wheel-visual svg { width: 100%; height: 100%; }
+
+.wheel-info { flex: 1; }
+
+.wheel-title {
+  font-family: 'Georgia', serif;
+  font-size: 11px;
+  color: #C9A84C;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.wheel-desc {
+  font-size: 7.5px;
+  color: rgba(201,168,76,0.55);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.wheel-btn {
+  display: inline-block;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: #C9A84C;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+/* Date card */
+.date-card {
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.dc-label {
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.35);
+  margin-bottom: 8px;
+}
+
+.dc-night {
+  font-family: 'Georgia', serif;
+  font-size: 11px;
+  font-style: italic;
+  color: #E2C06A;
+  margin-bottom: 6px;
+}
+
+.dc-detail {
+  font-size: 7.5px;
+  color: rgba(201,168,76,0.5);
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(201,168,76,0.05);
+  display: flex;
+  justify-content: space-between;
+}
+.dc-detail:last-of-type { border-bottom: none; }
+
+.dc-stars {
+  color: #C9A84C;
+  font-size: 8px;
+  margin-top: 6px;
+}
+
+/* Invite card */
+.invite-card {
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 10px;
+  padding: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.invite-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+}
+
+.ic-label {
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.35);
+  margin-bottom: 6px;
+}
+
+.ic-from {
+  font-size: 7.5px;
+  color: rgba(201,168,76,0.6);
+  margin-bottom: 4px;
+}
+
+.ic-message {
+  font-family: 'Georgia', serif;
+  font-size: 9px;
+  font-style: italic;
+  color: #C9A84C;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.ic-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.ic-btn {
+  flex: 1;
+  padding: 5px;
+  text-align: center;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+.ic-btn.accept {
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.4);
+  color: #C9A84C;
+}
+
+.ic-btn.counter {
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.15);
+  color: rgba(201,168,76,0.4);
+}
+
+/* ── PHONE LEFT — Saved Nights ── */
+.saved-nights {
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #0D0810 0%, #110A14 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.sn-header {
+  background: linear-gradient(135deg, #1A0F1E 0%, #221226 100%);
+  padding: 20px 14px 10px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+
+.sn-title {
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #C9A84C;
+}
+
+.sn-sub {
+  font-size: 7px;
+  color: rgba(201,168,76,0.35);
+  margin-top: 2px;
+  letter-spacing: 0.1em;
+}
+
+.sn-body {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  overflow: hidden;
+}
+
+.sn-card {
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 8px;
+  padding: 9px 11px;
+}
+
+.sn-name {
+  font-family: 'Georgia', serif;
+  font-size: 9.5px;
+  font-style: italic;
+  color: #E2C06A;
+  margin-bottom: 3px;
+}
+
+.sn-meta {
+  font-size: 6.5px;
+  color: rgba(201,168,76,0.4);
+  display: flex;
+  justify-content: space-between;
+}
+
+.sn-rating { color: #C9A84C; font-size: 7px; margin-top: 3px; }
+
+/* ── PHONE RIGHT — Planning ── */
+.planning {
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #0D0810 0%, #110A14 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.pl-header {
+  background: linear-gradient(135deg, #1A0F1E 0%, #221226 100%);
+  padding: 20px 14px 10px;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+
+.pl-title {
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #C9A84C;
+}
+
+.pl-sub {
+  font-size: 7px;
+  color: rgba(201,168,76,0.35);
+  margin-top: 2px;
+  letter-spacing: 0.1em;
+}
+
+.pl-body {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.pl-section {
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 8px;
+  padding: 9px 11px;
+}
+
+.pl-sec-title {
+  font-size: 6.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.4);
+  margin-bottom: 5px;
+}
+
+.pl-item {
+  font-size: 7.5px;
+  color: rgba(201,168,76,0.65);
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(201,168,76,0.05);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.pl-item:last-child { border-bottom: none; }
+
+.pl-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: #C9A84C;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+.preview-label {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.07);
+  white-space: nowrap;
+  font-family: Georgia, serif;
+}
+</style>
+</head>
+<body>
+<div class="scene">
+
+  <!-- PHONE LEFT — Saved Nights -->
+  <div class="phone" style="transform: perspective(800px) rotateY(14deg) rotateX(1deg); margin-top: 50px;">
+    <div class="phone-notch"></div>
+    <div class="saved-nights">
+      <div class="sn-header">
+        <div class="sn-title">The Cellar</div>
+        <div class="sn-sub">Saved Date Nights</div>
+      </div>
+      <div class="sn-body">
+        <div class="sn-card" style="border-color:rgba(201,168,76,0.25);">
+          <div class="sn-name">Candlelight & Cobblestone</div>
+          <div class="sn-meta"><span>Italian dinner · Downtown</span><span>Mar 2025</span></div>
+          <div class="sn-rating">★★★★★</div>
+        </div>
+        <div class="sn-card">
+          <div class="sn-name">Starlight Picnic</div>
+          <div class="sn-meta"><span>Outdoor · Homemade</span><span>Jan 2025</span></div>
+          <div class="sn-rating">★★★★☆</div>
+        </div>
+        <div class="sn-card">
+          <div class="sn-name">The Quiet Evening</div>
+          <div class="sn-meta"><span>Home · Movie · Dessert</span><span>Dec 2024</span></div>
+          <div class="sn-rating">★★★★★</div>
+        </div>
+        <div class="sn-card">
+          <div class="sn-name">Adventure Day</div>
+          <div class="sn-meta"><span>Hiking · Lunch out</span><span>Nov 2024</span></div>
+          <div class="sn-rating">★★★★☆</div>
+        </div>
+        <div style="padding:8px;text-align:center;">
+          <div style="font-size:7px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(201,168,76,0.3);font-style:italic;">"I am my beloved's and my beloved is mine"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLET CENTER — Main Vineyard -->
+  <div class="tablet">
+    <div class="vineyard">
+      <div class="v-header">
+        <div>
+          <div class="v-title">The Vineyard</div>
+          <div style="font-size:7px;color:rgba(201,168,76,0.35);margin-top:2px;letter-spacing:0.1em;">Dawn & John · Private</div>
+        </div>
+        <div class="v-verse">"My beloved spake, and said unto me, Rise up, my love..."<br><span style="opacity:0.5;">— Song 2:10</span></div>
+      </div>
+      <div class="v-tabs">
+        <div class="v-tab">Together</div>
+        <div class="v-tab active">Dates</div>
+        <div class="v-tab">Cellar</div>
+        <div class="v-tab">Between Us</div>
+      </div>
+      <div class="v-body">
+
+        <!-- Spinning Wheel -->
+        <div class="wheel-card">
+          <div class="wheel-visual">
+            <svg viewBox="0 0 90 90">
+              <circle cx="45" cy="45" r="40" fill="none" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+              <!-- Wheel segments -->
+              <path d="M45 45 L45 5 A40 40 0 0 1 82 62 Z" fill="rgba(201,168,76,0.12)" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
+              <path d="M45 45 L82 62 A40 40 0 0 1 26 83 Z" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.15)" stroke-width="0.5"/>
+              <path d="M45 45 L26 83 A40 40 0 0 1 5 28 Z" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.25)" stroke-width="0.5"/>
+              <path d="M45 45 L5 28 A40 40 0 0 1 45 5 Z" fill="rgba(201,168,76,0.06)" stroke="rgba(201,168,76,0.12)" stroke-width="0.5"/>
+              <!-- Center -->
+              <circle cx="45" cy="45" r="8" fill="#1A0F1E" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+              <text x="45" y="49" text-anchor="middle" font-size="8" fill="#C9A84C">♥</text>
+              <!-- Pointer -->
+              <polygon points="45,8 42,2 48,2" fill="#C9A84C"/>
+            </svg>
+          </div>
+          <div class="wheel-info">
+            <div class="wheel-title">Date Night Designer</div>
+            <div class="wheel-desc">Spin the wheel to plan your next date night. Favorites are weighted higher — your best evenings together shape what comes next.</div>
+            <div class="wheel-btn">Spin the Wheel</div>
+          </div>
+        </div>
+
+        <!-- Last Date Card -->
+        <div class="date-card">
+          <div class="dc-label">Last Date Night</div>
+          <div class="dc-night">Candlelight & Cobblestone</div>
+          <div class="dc-detail"><span>Dinner</span><span style="color:#E2C06A;">Italian · Downtown</span></div>
+          <div class="dc-detail"><span>Activity</span><span style="color:#E2C06A;">Evening walk</span></div>
+          <div class="dc-detail"><span>Dessert</span><span style="color:#E2C06A;">Shared tiramisu</span></div>
+          <div class="dc-stars">★★★★★ &nbsp;<span style="font-size:6.5px;color:rgba(201,168,76,0.4);">Rated by both</span></div>
+        </div>
+
+        <!-- Invitation -->
+        <div class="invite-card">
+          <div class="ic-label">Invitation Waiting</div>
+          <div class="ic-from" style="color:rgba(201,168,76,0.5);">From John · Tonight</div>
+          <div class="ic-message">"Come away with me, my love. The Quiet Evening awaits — just us, no schedule."</div>
+          <div class="ic-actions">
+            <div class="ic-btn accept">Accept</div>
+            <div class="ic-btn counter">Suggest Changes</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PHONE RIGHT — Planning -->
+  <div class="phone" style="transform: perspective(800px) rotateY(-14deg) rotateX(1deg); margin-top: 50px;">
+    <div class="phone-notch"></div>
+    <div class="planning">
+      <div class="pl-header">
+        <div class="pl-title">Plan Together</div>
+        <div class="pl-sub">Date Night Prep</div>
+      </div>
+      <div class="pl-body">
+        <div class="pl-section">
+          <div class="pl-sec-title">Dinner Ideas</div>
+          <div class="pl-item"><div class="pl-dot"></div>Italian downtown</div>
+          <div class="pl-item"><div class="pl-dot"></div>Homemade pasta night</div>
+          <div class="pl-item"><div class="pl-dot"></div>Steakhouse anniversary</div>
+          <div class="pl-item"><div class="pl-dot"></div>Picnic basket</div>
+        </div>
+        <div class="pl-section">
+          <div class="pl-sec-title">Activities</div>
+          <div class="pl-item"><div class="pl-dot"></div>Sunset drive</div>
+          <div class="pl-item"><div class="pl-dot"></div>Movie at home</div>
+          <div class="pl-item"><div class="pl-dot"></div>Board games</div>
+        </div>
+        <div class="pl-section" style="border-color:rgba(201,168,76,0.2);">
+          <div class="pl-sec-title">Dawn's Wishes</div>
+          <div class="pl-item"><div class="pl-dot" style="background:#E2C06A;opacity:0.8;"></div>That little Italian place</div>
+          <div class="pl-item"><div class="pl-dot" style="background:#E2C06A;opacity:0.8;"></div>Somewhere with a fireplace</div>
+        </div>
+        <div style="padding:8px;text-align:center;margin-top:4px;">
+          <div style="font-size:7px;letter-spacing:0.12em;color:rgba(201,168,76,0.25);font-style:italic;">"His banner over me was love."</div>
+          <div style="font-size:6px;color:rgba(201,168,76,0.15);margin-top:2px;">Song of Solomon 2:4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-label">The Vineyard · Date Night Designer · Private Couples App · Systems Seven</div>
+</div>
+</body>
+</html>
