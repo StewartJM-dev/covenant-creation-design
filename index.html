@@ -316,7 +316,7 @@
     }
 
     .ss-preview-card {
-      background: #1A1400;
+      background: var(--black-card);
       border: 1px solid rgba(201,168,76,0.35);
       overflow: hidden;
       box-shadow: 0 4px 24px rgba(0,0,0,0.6);
@@ -330,11 +330,16 @@
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
 
-    .ss-preview-card img {
+    .ss-preview-card .img-mat {
+      background: #FFFFFF;
+      padding: 14px;
+      margin: 12px;
+    }
+
+    .ss-preview-card .img-mat img {
       display: block;
-      width: calc(100% - 24px);
-      margin: 12px auto;
-      border: 1px solid rgba(255,255,255,0.06);
+      width: 100%;
+      border: none;
     }
 
 .ss-preview-label {
@@ -647,22 +652,22 @@
     <div class="ss-previews">
 
       <div class="ss-preview-card">
-        <img src="ss-bridge.png" alt="The Bridge — Systems Seven Command Center" style="width:100%;display:block;">
+        <div class="img-mat"><img src="ss-bridge.png" alt="The Bridge — Systems Seven Command Center"></div>
         <div class="ss-preview-label">The Bridge — John's Command Center · Live SVG Instrument Gauges · Mission Tracking · Status Board</div>
       </div>
 
       <div class="ss-preview-card">
-        <img src="ss-ecosystem.png" alt="Systems Seven Full Ecosystem" style="width:100%;display:block;">
+        <div class="img-mat"><img src="ss-ecosystem.png" alt="Systems Seven Full Ecosystem"></div>
         <div class="ss-preview-label">Full Ecosystem — The Bridge · The Homestead · Agent HQ · Three Connected Apps</div>
       </div>
 
       <div class="ss-preview-card">
-        <img src="ss-vineyard.png" alt="The Vineyard — Date Night Designer" style="width:100%;display:block;">
+        <div class="img-mat"><img src="ss-vineyard.png" alt="The Vineyard — Date Night Designer"></div>
         <div class="ss-preview-label">The Vineyard — Date Night Designer · Spinning Wheel · Saved Nights · Invitation Flow</div>
       </div>
 
       <div class="ss-preview-card">
-        <img src="ss-saga.png" alt="The Adamah Saga Reader" style="width:100%;display:block;">
+        <div class="img-mat"><img src="ss-saga.png" alt="The Adamah Saga Reader"></div>
         <div class="ss-preview-label">The Adamah Saga Reader — Series Overview · Chapter Reader · Writing Station · Cadence Tracker</div>
       </div>
 
