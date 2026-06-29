@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Covenant Creation & Design — Benton, PA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Georgia&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:      #0A0A0A;
+      --black-mid:  #111111;
+      --black-card: #161616;
+      --red:        #E8322A;
+      --red-dim:    #B02820;
+      --silver:     #C8C8C8;
+      --gold:       #C9A84C;
+      --gold-dim:   #8A6F2E;
+      --white:      #FFFFFF;
+      --white-dim:  #A0A0A0;
+      --border:     rgba(255,255,255,0.07);
+      --border-red: rgba(232,50,42,0.3);
+      --border-gold:rgba(201,168,76,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo img {
+      height: 56px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 94vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 1.5rem 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 10vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      margin-bottom: 0;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-rule {
+      width: clamp(60px, 12vw, 160px);
+      height: 3px;
+      background: var(--gold);
+      margin: 1.4rem 0 2rem;
+    }
+
+    .hero-sub {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      font-weight: 300;
+      color: var(--white-dim);
+      max-width: 500px;
+      margin-bottom: 2.8rem;
+      line-height: 1.8;
+    }
+
+    .hero-sub strong { color: var(--white); font-weight: 500; }
+
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #E2C06A; transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--white-dim);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── SECTION BASE ── */
+    .section-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 5.5rem 1.5rem;
+    }
+
+    .section-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-gold);
+      max-width: 60px;
+    }
+
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      letter-spacing: 0.04em;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    h2 em { font-style: normal; color: var(--gold); }
+
+    .section-intro {
+      font-size: 0.97rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      max-width: 520px;
+      margin-bottom: 2.8rem;
+      line-height: 1.8;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--black-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text strong { color: var(--white); font-weight: 500; }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-gold);
+    }
+
+    .stat-row {
+      padding: 1.2rem 1.4rem;
+      border-bottom: 1px solid var(--border-gold);
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .stat-row:last-child { border-bottom: none; }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+
+    /* ── SYSTEMS SEVEN SHOWCASE ── */
+    #systems-seven {
+      background: var(--black-mid);
+      border-top: 1px solid var(--border-gold);
+      border-bottom: 1px solid var(--border-gold);
+    }
+
+    #systems-seven .section-label { color: var(--gold); }
+    #systems-seven .section-label::after { background: var(--border-gold); }
+    #systems-seven h2 em { color: var(--gold); }
+
+    .ss-description {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      max-width: 680px;
+      margin-bottom: 3rem;
+      line-height: 1.85;
+    }
+
+    .ss-description strong { color: var(--white); font-weight: 500; }
+
+    .ss-tech-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .ss-tech-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+      background: rgba(201,168,76,0.05);
+    }
+
+    .ss-previews {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .ss-preview-card {
+      background: var(--black-card);
+      border: 1px solid var(--border-gold);
+      overflow: hidden;
+    }
+
+    .ss-preview-card iframe {
+      width: 100%;
+      height: 520px;
+      border: none;
+      display: block;
+      pointer-events: none;
+      transform-origin: top left;
+    }
+
+    .ss-preview-label {
+      padding: 0.9rem 1.2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ss-preview-label::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+
+    .ss-brand-img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ── PROJECTS ── */
+    #work { background: var(--black); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .project-card {
+      background: var(--black-card);
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .project-card:hover { background: #1C1C1C; }
+    .project-card:hover .project-arrow { color: var(--gold); transform: translateX(3px); }
+
+    .project-tag {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .project-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .project-card p {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      margin-top: 0.4rem;
+    }
+
+    .project-stack {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(160,160,160,0.45);
+    }
+
+    .project-arrow {
+      font-size: 1rem;
+      color: var(--white-dim);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      background: var(--black-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .services-list {
+      border: 1px solid var(--border-gold);
+    }
+
+    .service-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1.5rem 1.6rem;
+      border-bottom: 1px solid var(--border-gold);
+    }
+    .service-row:last-child { border-bottom: none; }
+
+    .service-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      min-width: 115px;
+      padding-top: 0.1rem;
+    }
+
+    .service-info strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+    .service-info p {
+      font-size: 0.83rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      line-height: 1.65;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--black); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .contact-block {
+      background: var(--black-card);
+      border: 1px solid var(--border-gold);
+      padding: 1.8rem;
+    }
+
+    .contact-block h3 {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-block p {
+      font-size: 0.87rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      margin-bottom: 1.2rem;
+      line-height: 1.65;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 0.15rem;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.25);
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .ss-preview-card iframe { height: 300px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="ccd-horizontal.png" alt="Covenant Creation & Design">
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#systems-seven">Systems Seven</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div style="background:var(--black);">
+  <div class="hero">
+    <div class="hero-eyebrow">Benton, Pennsylvania</div>
+    <h1>COVENANT<br>CREATION<br><em>&amp; DESIGN</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">
+      <strong>Affordable, professional websites</strong> built for local businesses &amp; ministries — from a neighbor who builds things that last.
+    </p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">See the Work</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap reveal">
+    <div class="section-label">About</div>
+    <h2>Built to last.<br><em>Built with purpose.</em></h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Covenant Creation &amp; Design is a web design and digital creation studio based in Benton, Pennsylvania — built on the belief that a website should do more than look good. It should communicate trust, reflect values, and create something worth handing down.</p>
+        <p>Working with cutting-edge AI tools and years of hands-on building experience, we design and deploy <strong>custom websites and web applications</strong> for small businesses, churches, youth organizations, and anyone in Columbia and Sullivan County who needs a real online presence without paying big-agency prices.</p>
+        <p>Every project is hand-crafted for that client — not a template with a logo swapped in. If you can describe what you need, we can build it.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-row">
+          <span class="stat-num">6</span>
+          <span class="stat-label">Sites &amp; apps built</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Counties served</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-num">$0</span>
+          <span class="stat-label">Hosting cost on most projects</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Custom — no templates</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEMS SEVEN SHOWCASE -->
+<section id="systems-seven">
+  <div class="section-wrap reveal">
+    <div class="section-label">Featured Project</div>
+    <h2>Systems Seven —<br><em>The Pièce de Résistance</em></h2>
+    <p class="ss-description">
+      Systems Seven is a <strong>full-stack family operating system</strong> — six interconnected web applications with a Firebase real-time database backend, PIN authentication, live SVG instrument gauges, and a Progressive Web App architecture that installs directly to your home screen. Three command centers, a private couples app with date night design tools, an epic fiction reader, and a family devotional system — all connected, all live, all built from scratch.
+    </p>
+    <div class="ss-tech-row">
+      <span class="ss-tech-badge">Firebase Realtime DB</span>
+      <span class="ss-tech-badge">Progressive Web App</span>
+      <span class="ss-tech-badge">PIN Authentication</span>
+      <span class="ss-tech-badge">SVG Gauges</span>
+      <span class="ss-tech-badge">6 Interconnected Apps</span>
+      <span class="ss-tech-badge">GitHub Pages</span>
+      <span class="ss-tech-badge">Real-Time Data</span>
+      <span class="ss-tech-badge">Multi-User</span>
+    </div>
+
+    <div class="ss-previews">
+
+      <div class="ss-preview-card">
+        <iframe src="systems-seven-preview2.html" scrolling="no" title="The Bridge — Systems Seven"></iframe>
+        <div class="ss-preview-label">The Bridge — John's Command Center · Live SVG Instrument Gauges · Mission Tracking · Status Board</div>
+      </div>
+
+      <div class="ss-preview-card">
+        <iframe src="systems-seven-preview.html" scrolling="no" title="Systems Seven Three Device View"></iframe>
+        <div class="ss-preview-label">Full Ecosystem — The Bridge · The Homestead · Agent HQ · Three Connected Apps</div>
+      </div>
+
+      <div class="ss-preview-card">
+        <iframe src="systems-seven-vineyard.html" scrolling="no" title="The Vineyard"></iframe>
+        <div class="ss-preview-label">The Vineyard — Date Night Designer · Spinning Wheel · Saved Nights · Invitation Flow</div>
+      </div>
+
+      <div class="ss-preview-card">
+        <iframe src="systems-seven-saga.html" scrolling="no" title="Adamah Saga Reader"></iframe>
+        <div class="ss-preview-label">The Adamah Saga Reader — Series Overview · Chapter Reader · Writing Station · Cadence Tracker</div>
+      </div>
+
+      <div class="ss-preview-card">
+        <img src="ccd-brand-closer.png" alt="Covenant Creation & Design" class="ss-brand-img">
+        <div class="ss-preview-label">Covenant Creation &amp; Design — Built by the same hands that built Systems Seven</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- OTHER PROJECTS -->
+<section id="work">
+  <div class="section-wrap reveal">
+    <div class="section-label">Portfolio</div>
+    <h2>More work.<br><em>Real clients.</em></h2>
+    <p class="section-intro">Small business, ministry, nonprofit, and regional platforms — built and deployed.</p>
+
+    <div class="projects-grid">
+
+      <a href="https://stewartjm-dev.github.io/quality-mechanical/" target="_blank" rel="noopener" class="project-card">
+        <span class="project-tag">Small Business</span>
+        <h3>Quality Mechanical</h3>
+        <p>Full brand identity and website for a local mechanic — custom AI-generated photography, logo integration, navy &amp; gold design system, SMS contact, deployed live.</p>
+        <div class="project-footer">
+          <span class="project-stack">HTML · CSS · GitHub Pages</span>
+          <span class="project-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="https://stewartjm-dev.github.io/traillife-pa1997/" target="_blank" rel="noopener" class="project-card">
+        <span class="project-tag">Youth Organization</span>
+        <h3>Trail Life Troop PA-1997</h3>
+        <p>Multi-page troop website with Google Calendar integration, photo gallery, fundraiser section, Google Maps, PWA mobile install, and SEO optimization.</p>
+        <div class="project-footer">
+          <span class="project-stack">HTML · CSS · Google APIs · PWA</span>
+          <span class="project-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="https://stewartjm-dev.github.io/traillife-northeast/" target="_blank" rel="noopener" class="project-card">
+        <span class="project-tag">Regional Nonprofit</span>
+        <h3>Trail Life Northeast</h3>
+        <p>12-page regional platform for multiple troops — automated calendar API, gear swap system, troops directory, leaders directory, achievements board, and blog.</p>
+        <div class="project-footer">
+          <span class="project-stack">HTML · CSS · Calendar API · Google Sheets</span>
+          <span class="project-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="https://stewartjm-dev.github.io/rightly-divided/" target="_blank" rel="noopener" class="project-card">
+        <span class="project-tag">Theology &amp; Publishing</span>
+        <h3>Rightly Divided</h3>
+        <p>Eight-article biblical theology series — clean reading experience, dual audience targeting, GitHub Pages deployment. Written and designed for lasting impact.</p>
+        <div class="project-footer">
+          <span class="project-stack">HTML · CSS · GitHub Pages</span>
+          <span class="project-arrow">→</span>
+        </div>
+      </a>
+
+      <a href="https://noahelias.org" target="_blank" rel="noopener" class="project-card">
+        <span class="project-tag">Author Platform</span>
+        <h3>Noah Elias</h3>
+        <p>Pre-launch author website for a 12-book biblical fiction series — brand identity, X social integration strategy, countdown campaign, and reader acquisition.</p>
+        <div class="project-footer">
+          <span class="project-stack">HTML · CSS · GitHub Pages</span>
+          <span class="project-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-wrap reveal">
+    <div class="section-label">Services &amp; Pricing</div>
+    <h2>What we build.<br><em>What it costs.</em></h2>
+    <p class="section-intro">Straightforward pricing — no retainers, no surprise invoices. You know the number before we start.</p>
+
+    <div class="services-list">
+      <div class="service-row">
+        <div class="service-price">$300–600</div>
+        <div class="service-info">
+          <strong>Single-Page Business Site</strong>
+          <p>One clean page covering who you are, what you do, where you are, and how to reach you. Perfect for tradesmen, sole proprietors, or anyone who needs a professional web presence fast.</p>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-price">$600–1,500</div>
+        <div class="service-info">
+          <strong>Multi-Page Website</strong>
+          <p>Full site with multiple pages — home, about, services, gallery, contact. Includes mobile-responsive design, contact forms, Google Maps integration, and basic SEO setup.</p>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-price">$800–2,000</div>
+        <div class="service-info">
+          <strong>Organization &amp; Ministry Sites</strong>
+          <p>Churches, youth groups, nonprofits, and community organizations. Calendar integration, resource centers, photo galleries, event pages, and volunteer signup forms.</p>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-price">$1,500+</div>
+        <div class="service-info">
+          <strong>Custom Web Applications</strong>
+          <p>Real-time databases, user authentication, multi-user apps, interactive tools. If you have a workflow problem that needs a software solution, let's talk about what's possible.</p>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-price">$50–150/mo</div>
+        <div class="service-info">
+          <strong>Maintenance &amp; Updates</strong>
+          <p>Monthly content updates, photo additions, text changes, and ongoing support. No need to learn code — just send us what needs to change.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-wrap reveal">
+    <div class="section-label">Contact</div>
+    <h2>Let's build<br><em>something.</em></h2>
+    <p class="section-intro">Serving Benton, Bloomsburg, Sweet Valley, and the surrounding area. First conversation is always free.</p>
+
+    <div class="contact-grid">
+      <div class="contact-block">
+        <h3>Send a Text</h3>
+        <p>Fastest way to reach us. Describe what you're looking for and we'll get back to you same day.</p>
+        <a href="sms:+15703167600" class="contact-link">Text Us →</a>
+      </div>
+      <div class="contact-block">
+        <h3>Send an Email</h3>
+        <p>Prefer email? Send a message anytime and we'll respond within 24 hours.</p>
+        <a href="mailto:stewartjm@me.com" class="contact-link">stewartjm@me.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Covenant Creation &amp; Design &nbsp;·&nbsp; Benton, Pennsylvania &nbsp;·&nbsp; Built to Last
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
