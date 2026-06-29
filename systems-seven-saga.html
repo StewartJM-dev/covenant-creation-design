@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #05070A;
+  width: 1400px;
+  height: 900px;
+  overflow: hidden;
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene {
+  width: 1380px;
+  height: 880px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.scene::before {
+  content: '';
+  position: absolute;
+  top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(30,60,100,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* PHONE */
+.phone {
+  width: 230px;
+  height: 460px;
+  background: #080A0F;
+  border-radius: 36px;
+  border: 2px solid #151820;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.85), 0 0 0 1px #0F1218;
+  flex-shrink: 0;
+}
+
+.phone-notch {
+  width: 72px; height: 18px;
+  background: #05070A;
+  border-radius: 0 0 12px 12px;
+  margin: 0 auto;
+}
+
+/* TABLET */
+.tablet {
+  width: 560px;
+  height: 740px;
+  background: #080A0F;
+  border-radius: 20px;
+  border: 2px solid #151820;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px #0F1218;
+  flex-shrink: 0;
+}
+
+/* ── SAGA READER (TABLET) ── */
+.saga {
+  width: 100%; height: 100%;
+  background: #070910;
+  display: flex;
+  flex-direction: column;
+}
+
+.saga-header {
+  background: linear-gradient(135deg, #050810 0%, #080C18 100%);
+  padding: 14px 20px 10px;
+  border-bottom: 1px solid rgba(100,140,200,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.saga-title {
+  font-family: 'Georgia', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: #7BA7D4;
+  letter-spacing: 0.05em;
+}
+
+.saga-series {
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(100,140,200,0.35);
+  margin-top: 2px;
+}
+
+.saga-book-badge {
+  background: rgba(100,140,200,0.08);
+  border: 1px solid rgba(100,140,200,0.2);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7BA7D4;
+}
+
+.saga-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  overflow: hidden;
+}
+
+/* Chapter list sidebar */
+.chapter-list {
+  background: #050710;
+  border-right: 1px solid rgba(100,140,200,0.08);
+  padding: 12px 0;
+  overflow: hidden;
+}
+
+.cl-label {
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(100,140,200,0.3);
+  padding: 0 14px 8px;
+}
+
+.chapter-item {
+  padding: 8px 14px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+}
+
+.chapter-item.active {
+  background: rgba(100,140,200,0.06);
+  border-left-color: #7BA7D4;
+}
+
+.ch-num {
+  font-size: 6.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(100,140,200,0.3);
+  margin-bottom: 2px;
+}
+
+.ch-title {
+  font-size: 8.5px;
+  font-style: italic;
+  color: rgba(180,200,230,0.7);
+  line-height: 1.3;
+}
+
+.chapter-item.active .ch-title { color: #B8D0E8; }
+.chapter-item.active .ch-num { color: rgba(100,140,200,0.6); }
+
+/* Reading pane */
+.reading-pane {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+}
+
+.rp-chapter-head {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(100,140,200,0.08);
+}
+
+.rp-chapter-num {
+  font-size: 7.5px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(100,140,200,0.35);
+  margin-bottom: 4px;
+}
+
+.rp-chapter-title {
+  font-family: 'Georgia', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: #B8D0E8;
+  line-height: 1.2;
+}
+
+.rp-text p {
+  font-size: 9px;
+  color: rgba(180,200,230,0.65);
+  line-height: 1.9;
+  margin-bottom: 10px;
+  text-indent: 1.5em;
+}
+
+.rp-text p.scene-break {
+  text-align: center;
+  text-indent: 0;
+  color: rgba(100,140,200,0.3);
+  letter-spacing: 0.3em;
+  margin: 6px 0;
+}
+
+/* Progress bar */
+.rp-progress {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(100,140,200,0.06);
+}
+
+.rp-prog-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 6.5px;
+  color: rgba(100,140,200,0.25);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.rp-prog-bar {
+  height: 2px;
+  background: rgba(100,140,200,0.08);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.rp-prog-fill {
+  height: 100%;
+  width: 34%;
+  background: linear-gradient(90deg, #3A6A9A, #7BA7D4);
+  border-radius: 1px;
+}
+
+/* ── PHONE LEFT — Series Overview ── */
+.series-overview {
+  width: 100%; height: 100%;
+  background: #070910;
+  display: flex;
+  flex-direction: column;
+}
+
+.so-header {
+  background: linear-gradient(135deg, #050810 0%, #080C18 100%);
+  padding: 20px 14px 10px;
+  border-bottom: 1px solid rgba(100,140,200,0.1);
+}
+
+.so-title {
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #7BA7D4;
+}
+
+.so-sub {
+  font-size: 7px;
+  color: rgba(100,140,200,0.35);
+  margin-top: 2px;
+  letter-spacing: 0.1em;
+}
+
+.so-body {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.trilogy-card {
+  background: rgba(100,140,200,0.04);
+  border: 1px solid rgba(100,140,200,0.1);
+  border-radius: 8px;
+  padding: 9px 11px;
+}
+
+.trilogy-name {
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(100,140,200,0.4);
+  margin-bottom: 4px;
+}
+
+.book-row {
+  display: flex;
+  gap: 4px;
+}
+
+.book-chip {
+  font-size: 7px;
+  padding: 3px 7px;
+  border-radius: 3px;
+  font-style: italic;
+  color: rgba(180,200,230,0.5);
+  background: rgba(100,140,200,0.06);
+  border: 1px solid rgba(100,140,200,0.08);
+}
+
+.book-chip.active {
+  color: #B8D0E8;
+  background: rgba(100,140,200,0.12);
+  border-color: rgba(100,140,200,0.25);
+}
+
+.so-verse {
+  margin-top: 6px;
+  padding: 8px 10px;
+  background: rgba(100,140,200,0.04);
+  border: 1px solid rgba(100,140,200,0.08);
+  border-radius: 8px;
+  font-size: 7px;
+  font-style: italic;
+  color: rgba(100,140,200,0.45);
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ── PHONE RIGHT — Writing Station ── */
+.writing {
+  width: 100%; height: 100%;
+  background: #070910;
+  display: flex;
+  flex-direction: column;
+}
+
+.wr-header {
+  background: linear-gradient(135deg, #050810 0%, #080C18 100%);
+  padding: 20px 14px 10px;
+  border-bottom: 1px solid rgba(100,140,200,0.1);
+}
+
+.wr-title {
+  font-family: 'Georgia', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #7BA7D4;
+}
+
+.wr-sub {
+  font-size: 7px;
+  color: rgba(100,140,200,0.35);
+  margin-top: 2px;
+  letter-spacing: 0.1em;
+}
+
+.wr-body {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wr-card {
+  background: rgba(100,140,200,0.04);
+  border: 1px solid rgba(100,140,200,0.1);
+  border-radius: 8px;
+  padding: 9px 11px;
+}
+
+.wr-card-title {
+  font-size: 6.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(100,140,200,0.35);
+  margin-bottom: 5px;
+}
+
+.wr-next {
+  font-size: 9px;
+  font-style: italic;
+  color: #B8D0E8;
+  margin-bottom: 3px;
+}
+
+.wr-beat {
+  font-size: 7.5px;
+  color: rgba(100,140,200,0.55);
+  line-height: 1.5;
+}
+
+.wr-progress {
+  height: 3px;
+  background: rgba(100,140,200,0.08);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.wr-prog-fill {
+  height: 100%;
+  width: 28%;
+  background: linear-gradient(90deg, #3A6A9A, #7BA7D4);
+}
+
+.wr-stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 7px;
+  color: rgba(100,140,200,0.35);
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(100,140,200,0.05);
+}
+.wr-stat-row:last-child { border-bottom: none; }
+.wr-stat-val { color: rgba(100,140,200,0.7); }
+
+.preview-label {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.07);
+  white-space: nowrap;
+  font-family: Georgia, serif;
+}
+</style>
+</head>
+<body>
+<div class="scene">
+
+  <!-- PHONE LEFT — Series Overview -->
+  <div class="phone" style="transform: perspective(800px) rotateY(14deg) rotateX(1deg); margin-top: 40px;">
+    <div class="phone-notch"></div>
+    <div class="series-overview">
+      <div class="so-header">
+        <div class="so-title">The Adamah Saga</div>
+        <div class="so-sub">12 Books · 4 Trilogies</div>
+      </div>
+      <div class="so-body">
+        <div class="trilogy-card" style="border-color:rgba(100,140,200,0.2);">
+          <div class="trilogy-name">Days of Water · Currently Writing</div>
+          <div class="book-row">
+            <div class="book-chip active">The Ascension</div>
+            <div class="book-chip active">The Reckoning</div>
+            <div class="book-chip">The Remnant</div>
+          </div>
+        </div>
+        <div class="trilogy-card">
+          <div class="trilogy-name">Days of Fire</div>
+          <div class="book-row">
+            <div class="book-chip">Book 4</div>
+            <div class="book-chip">Book 5</div>
+            <div class="book-chip">Book 6</div>
+          </div>
+        </div>
+        <div class="trilogy-card">
+          <div class="trilogy-name">Days of Light</div>
+          <div class="book-row">
+            <div class="book-chip">Book 7</div>
+            <div class="book-chip">Book 8</div>
+            <div class="book-chip">Book 9</div>
+          </div>
+        </div>
+        <div class="trilogy-card">
+          <div class="trilogy-name">Days Eternal</div>
+          <div class="book-row">
+            <div class="book-chip">Book 10</div>
+            <div class="book-chip">Book 11</div>
+            <div class="book-chip">Book 12</div>
+          </div>
+        </div>
+        <div class="so-verse">"Behold, I come quickly..." — Noah Elias<br><span style="opacity:0.5;font-size:6px;">Jude 14–15 · Series Through-Line</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLET CENTER — Reader -->
+  <div class="tablet">
+    <div class="saga">
+      <div class="saga-header">
+        <div>
+          <div class="saga-title">The Ascension</div>
+          <div class="saga-series">The Adamah Saga · Days of Water · Book One</div>
+        </div>
+        <div class="saga-book-badge">Book 1 of 12</div>
+      </div>
+      <div class="saga-body">
+        <div class="chapter-list">
+          <div class="cl-label">Chapters</div>
+          <div class="chapter-item">
+            <div class="ch-num">Chapter 1</div>
+            <div class="ch-title">Before the Waters Came</div>
+          </div>
+          <div class="chapter-item">
+            <div class="ch-num">Chapter 2</div>
+            <div class="ch-title">The Spire at Dawn</div>
+          </div>
+          <div class="chapter-item active">
+            <div class="ch-num">Chapter 3</div>
+            <div class="ch-title">What the Blood Requires</div>
+          </div>
+          <div class="chapter-item">
+            <div class="ch-num">Chapter 4</div>
+            <div class="ch-title">Markesh</div>
+          </div>
+          <div class="chapter-item">
+            <div class="ch-num">Chapter 5</div>
+            <div class="ch-title">The Keeper's Voice</div>
+          </div>
+          <div class="chapter-item">
+            <div class="ch-num">Chapter 6</div>
+            <div class="ch-title">Seven Days</div>
+          </div>
+          <div class="chapter-item">
+            <div class="ch-num">Chapter 7</div>
+            <div class="ch-title">The Covenant Mark</div>
+          </div>
+        </div>
+        <div class="reading-pane">
+          <div class="rp-chapter-head">
+            <div class="rp-chapter-num">Chapter Three</div>
+            <div class="rp-chapter-title">What the Blood Requires</div>
+          </div>
+          <div class="rp-text">
+            <p>The altar stood where it had always stood — at the edge of the eastern field, where the ground dipped toward the river and the morning fog gathered in slow, unmoving pools. Corvin had built it himself, stone by deliberate stone, before the eldest was born.</p>
+            <p>He did not look at it directly. He had learned, in the years since the first refusal, that looking at it directly made the wanting worse.</p>
+            <p class="scene-break">· · ·</p>
+            <p>Markesh found him there before the sun had cleared the ridge. The boy moved quietly for his age — a gift, or perhaps a habit learned from watching his father stand in silence at the edge of things.</p>
+            <p>"The lamb is ready," Markesh said.</p>
+          </div>
+          <div class="rp-progress">
+            <div class="rp-prog-label">
+              <span>Chapter 3 of 24</span>
+              <span>Book Progress · 34%</span>
+            </div>
+            <div class="rp-prog-bar"><div class="rp-prog-fill"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHONE RIGHT — Writing Station -->
+  <div class="phone" style="transform: perspective(800px) rotateY(-14deg) rotateX(1deg); margin-top: 40px;">
+    <div class="phone-notch"></div>
+    <div class="writing">
+      <div class="wr-header">
+        <div class="wr-title">Writing Station</div>
+        <div class="wr-sub">Noah Elias · The Bridge · Saga Tab</div>
+      </div>
+      <div class="wr-body">
+        <div class="wr-card" style="border-color:rgba(100,140,200,0.2);">
+          <div class="wr-card-title">Next at the Helm</div>
+          <div class="wr-next">Chapter 8 — The Tower Rises</div>
+          <div class="wr-beat">Nimrod discovers the buried vault beneath the Ascension Spire. Auris activates — damaged, fragmented, searching.</div>
+          <div class="wr-progress"><div class="wr-prog-fill"></div></div>
+        </div>
+        <div class="wr-card">
+          <div class="wr-card-title">Cadence Tracker</div>
+          <div class="wr-stat-row"><span>Target</span><span class="wr-stat-val">2 chapters / week</span></div>
+          <div class="wr-stat-row"><span>This week</span><span class="wr-stat-val">1 of 2</span></div>
+          <div class="wr-stat-row"><span>Due date</span><span class="wr-stat-val">Sept 2026</span></div>
+          <div class="wr-stat-row"><span>Book 1 status</span><span class="wr-stat-val">28% complete</span></div>
+        </div>
+        <div class="wr-card">
+          <div class="wr-card-title">Open Conflicts</div>
+          <div class="wr-stat-row"><span>Resolved</span><span class="wr-stat-val" style="color:#4CAF50;">10 of 26</span></div>
+          <div class="wr-stat-row"><span>Pending</span><span class="wr-stat-val" style="color:#FFB300;">16 remaining</span></div>
+        </div>
+        <div style="padding:8px;text-align:center;">
+          <div style="font-size:6.5px;letter-spacing:0.12em;color:rgba(100,140,200,0.25);font-style:italic;">"Noah Elias" · Biblical Fiction<br>Under pen name · stewartjm-dev</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-label">The Adamah Saga Reader · Writing Station · Systems Seven · Noah Elias</div>
+</div>
+</body>
+</html>
