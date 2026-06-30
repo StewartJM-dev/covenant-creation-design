@@ -4,6 +4,14 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Covenant Creation & Design — Custom Websites & Branding</title>
+  <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.addEventListener('load', function() {
+      window.scrollTo(0, 0);
+    });
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -63,7 +71,37 @@
     .nav-links a:hover { color: var(--gold); }
 
     /* ── HERO ── */
+    .hero-wrap {
+      position: relative;
+      background: var(--black);
+      overflow: hidden;
+    }
+
+    .hero-bg-image {
+      position: absolute;
+      inset: 0;
+      background-image: url('47E32E41-C8BB-4643-8A17-C3FF963093D3.png');
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    .hero-bg-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        100deg,
+        rgba(10,10,10,0.97) 0%,
+        rgba(10,10,10,0.9) 30%,
+        rgba(10,10,10,0.55) 60%,
+        rgba(10,10,10,0.25) 100%
+      );
+    }
+
     .hero {
+      position: relative;
+      z-index: 1;
       min-height: 92vh;
       display: flex;
       flex-direction: column;
@@ -671,7 +709,8 @@
 </nav>
 
 <!-- HERO -->
-<div style="background:var(--black);">
+<div class="hero-wrap">
+  <div class="hero-bg-image"></div>
   <div class="hero">
     <div class="hero-eyebrow">Covenant Creation & Design</div>
     <h1>YOU HAVE<br>A PROBLEM.<br><em>WE BUILD<br>THE SOLUTION.</em></h1>
