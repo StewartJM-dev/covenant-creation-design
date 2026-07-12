@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Process — Covenant Creation & Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="ccd-horizontal.png" alt="Covenant Creation & Design"></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" >Home</a></li>
+    <li><a href="services.html" >Services</a></li>
+    <li><a href="portfolio.html" >Portfolio</a></li>
+    <li><a href="process.html" aria-current="page">Process</a></li>
+    <li><a href="about.html" >About</a></li>
+    <li><a href="contact.html" >Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HOW WE WORK -->
+<section id="how">
+  <div class="section-wrap reveal">
+    <div class="section-label">How We Work</div>
+    <h2>Simple process.<br><em>Real results.</em></h2>
+    <p class="section-intro">No tech jargon. No mystery. You describe your problem, we build the solution, you own it completely.</p>
+
+    <div style="margin-bottom:3rem;border:1px solid var(--border-gold);overflow:hidden;">
+      <img src="process-visual.png" alt="Our four-step process" style="width:100%;display:block;">
+    </div>
+
+    <div class="steps-list">
+      <div class="step-row">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <strong>You tell us your problem</strong>
+          <p>Text or email us what's not working. It doesn't have to be technical — just describe the situation. We ask a few follow-up questions to understand what you actually need versus what you think you need.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <strong>We scope it and give you a number</strong>
+          <p>No guessing. Before any work starts you get a clear description of what we'll build, what it will cost, and how long it will take. You decide if you want to move forward — no pressure either way.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <strong>We build it, you review it</strong>
+          <p>We build your solution and walk you through it. You tell us what to adjust. We don't consider it done until it actually solves the problem we set out to solve.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <strong>You own it completely</strong>
+          <p>No monthly platform fees, no proprietary lock-in, no holding your site hostage. What we build is yours. Most sites host for free. You keep every dollar your business makes.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <span class="step-num">05</span>
+        <div class="step-content">
+          <strong>We stay available</strong>
+          <p>Need something changed six months later? Text us. We offer affordable monthly maintenance or simple per-change pricing — whatever works for your situation.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem;padding:1.8rem;border:1px solid var(--border-gold);background:rgba(201,168,76,0.05);text-align:center;">
+      <p style="font-size:1rem;color:var(--white);font-weight:500;margin-bottom:0.5rem;">Ready to start step one?</p>
+      <p style="font-size:0.88rem;color:var(--white-dim);line-height:1.8;margin-bottom:1.4rem;">Tell us what's not working — the first conversation costs nothing.</p>
+      <a href="contact.html" class="btn-primary">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Covenant Creation &amp; Design &nbsp;·&nbsp; Built to Last &nbsp;·&nbsp; Serving Clients Everywhere
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
