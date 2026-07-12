@@ -6,713 +6,22 @@
   <title>Covenant Creation & Design — Custom Websites & Branding</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --black:      #111318;
-      --black-mid:  #1A1D24;
-      --black-card: #1E2128;
-      --red:        #E8322A;
-      --gold:       #C9A84C;
-      --gold-light: #E2C06A;
-      --gold-dim:   #B8963E;
-      --white:      #FFFFFF;
-      --white-dim:  #C0C4CC;
-      --border:     rgba(255,255,255,0.07);
-      --border-gold:rgba(201,168,76,0.2);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Inter', system-ui, sans-serif;
-      font-size: 1rem;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(17,19,24,0.97);
-      border-bottom: 1px solid var(--border);
-      padding: 0.6rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      backdrop-filter: blur(8px);
-    }
-
-    .nav-logo img { height: 56px; width: auto; display: block; }
-
-    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--gold); }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: 92vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 6rem 1.5rem 4rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .hero-slideshow {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      overflow: hidden;
-    }
-    .hero-slide {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center center;
-      opacity: 0;
-      animation: heroFade 24s infinite;
-    }
-    .hero-slide:nth-child(1) { animation-delay: 0s; }
-    .hero-slide:nth-child(2) { animation-delay: 6s; }
-    .hero-slide:nth-child(3) { animation-delay: 12s; }
-    .hero-slide:nth-child(4) { animation-delay: 18s; }
-
-    @keyframes heroFade {
-      0%   { opacity: 0; }
-      5%   { opacity: 1; }
-      20%  { opacity: 1; }
-      25%  { opacity: 0; }
-      100% { opacity: 0; }
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: linear-gradient(180deg, rgba(17,19,24,0.90) 0%, rgba(17,19,24,0.74) 42%, rgba(17,19,24,0.94) 100%);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hero-slide { animation: none; opacity: 0; }
-      .hero-slide:first-child { opacity: 1; }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 3;
-    }
-
-    .hero-eyebrow {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.6rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 28px; height: 1px;
-      background: var(--gold);
-    }
-
-    .hero h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.8rem, 10vw, 6.5rem);
-      line-height: 0.92;
-      letter-spacing: 0.02em;
-      color: var(--white);
-      margin-bottom: 0;
-    }
-    .hero h1 em { font-style: normal; color: var(--gold); }
-
-    .hero-rule {
-      width: clamp(60px, 12vw, 140px);
-      height: 3px;
-      background: var(--gold);
-      margin: 1.4rem 0 2rem;
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 2.2vw, 1.2rem);
-      font-weight: 300;
-      color: var(--white-dim);
-      max-width: 560px;
-      margin-bottom: 2.8rem;
-      line-height: 1.85;
-    }
-    .hero-sub strong { color: var(--white); font-weight: 500; }
-
-    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--gold);
-      color: var(--black);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 0.9rem 2rem;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      border: 1px solid var(--border-gold);
-      color: var(--white-dim);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 0.9rem 1.8rem;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* ── SECTION BASE ── */
-    .section-wrap {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 5.5rem 1.5rem;
-    }
-
-    .section-label {
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border-gold);
-      max-width: 60px;
-    }
-
-    h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 5.5vw, 3.6rem);
-      letter-spacing: 0.04em;
-      line-height: 1.0;
-      color: var(--white);
-      margin-bottom: 1rem;
-    }
-    h2 em { font-style: normal; color: var(--gold); }
-
-    .section-intro {
-      font-size: 0.97rem;
-      font-weight: 300;
-      color: var(--white-dim);
-      max-width: 580px;
-      margin-bottom: 2.8rem;
-      line-height: 1.85;
-    }
-
-    /* ── PROBLEMS SECTION ── */
-    #problems {
-      background: var(--black-mid);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .problems-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1px;
-      background: var(--border-gold);
-      border: 1px solid var(--border-gold);
-      margin-bottom: 3rem;
-    }
-
-    .problem-card {
-      background: var(--black-card);
-      padding: 1.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-    }
-
-    .problem-icon { font-size: 1.8rem; }
-
-    .problem-card h3 {
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--white);
-      line-height: 1.3;
-    }
-
-    .problem-card p {
-      font-size: 0.84rem;
-      font-weight: 300;
-      color: var(--white-dim);
-      line-height: 1.7;
-    }
-
-    .problem-card .solution {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-top: 0.3rem;
-      padding-top: 0.8rem;
-      border-top: 1px solid var(--border-gold);
-    }
-
-    /* ── HOW WE WORK ── */
-    #how {
-      background: var(--black);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .steps-list {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--border-gold);
-    }
-
-    .step-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.4rem;
-      padding: 1.5rem 1.6rem;
-      border-bottom: 1px solid var(--border-gold);
-    }
-    .step-row:last-child { border-bottom: none; }
-
-    .step-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      color: var(--gold);
-      opacity: 0.4;
-      line-height: 1;
-      min-width: 2.5rem;
-      padding-top: 0.1rem;
-    }
-
-    .step-content strong {
-      display: block;
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.3rem;
-    }
-
-    .step-content p {
-      font-size: 0.87rem;
-      font-weight: 300;
-      color: var(--white-dim);
-      line-height: 1.7;
-    }
-
-    /* ── SYSTEMS SEVEN ── */
-    #systems-seven {
-      background: var(--black-mid);
-      border-top: 1px solid var(--border-gold);
-      border-bottom: 1px solid var(--border-gold);
-    }
-
-    .ss-description {
-      font-size: 0.97rem;
-      font-weight: 300;
-      color: var(--white-dim);
-      max-width: 720px;
-      margin-bottom: 2rem;
-      line-height: 1.9;
-    }
-    .ss-description strong { color: var(--white); font-weight: 500; }
-
-    .ss-feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1px;
-      background: var(--border-gold);
-      border: 1px solid var(--border-gold);
-      margin-bottom: 2.5rem;
-    }
-
-    .ss-feature {
-      background: var(--black-card);
-      padding: 1.2rem 1.4rem;
-    }
-
-    .ss-feature-name {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.3rem;
-    }
-
-    .ss-feature-desc {
-      font-size: 0.78rem;
-      font-weight: 300;
-      color: var(--white-dim);
-      line-height: 1.6;
-    }
-
-    .ss-tech-row {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
-    }
-
-    .ss-tech-badge {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.32rem 0.8rem;
-      border: 1px solid var(--border-gold);
-      color: var(--gold);
-      background: rgba(201,168,76,0.05);
-    }
-
-    .ss-previews {
-      display: flex;
-      flex-direction: column;
-      gap: 2.5rem;
-    }
-
-    .ss-preview-card {
-      background: var(--black-card);
-      border: 1px solid var(--border-gold);
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-      position: relative;
-    }
-
-    .ss-preview-card::before {
-      content: '';
-      display: block;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-
-    .ss-preview-card .img-mat {
-      background: transparent;
-      padding: 0;
-    }
-
-    .ss-preview-card .img-mat img {
-      display: block;
-      width: 100%;
-      border: none;
-    }
-
-    .ss-preview-label {
-      padding: 0.9rem 1.2rem;
-      border-top: 1px solid var(--border-gold);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(201,168,76,0.04);
-    }
-
-    .ss-preview-label::before {
-      content: '';
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--gold);
-      flex-shrink: 0;
-    }
-
-    .ss-brand-img { width: 100%; display: block; }
-
-
-    /* ── LOGO SHOWCASE ── */
-    #logos {
-      background: var(--black);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .logo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 1px;
-      background: var(--border-gold);
-      border: 1px solid var(--border-gold);
-      margin-bottom: 2rem;
-    }
-
-    .logo-cell {
-      background: var(--black-card);
-      padding: 1.8rem 1.2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.9rem;
-      transition: background 0.2s;
-    }
-
-    .logo-cell:hover { background: #252830; }
-
-    .logo-cell img {
-      width: 100%;
-      max-width: 120px;
-      height: 120px;
-      object-fit: contain;
-      display: block;
-    }
-
-    .logo-cell-name {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-      text-align: center;
-      line-height: 1.4;
-    }
-
-    .logo-cell-type {
-      font-size: 0.65rem;
-      color: var(--gold);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: center;
-    }
-
-    /* ── PROJECTS ── */
-    #work {
-      background: var(--black);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .project-card {
-      background: var(--black-card);
-      padding: 1.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      transition: background 0.2s;
-      text-decoration: none;
-      color: inherit;
-    }
-    .project-card:hover { background: #252830; }
-    .project-card:hover .project-arrow { color: var(--gold); transform: translateX(3px); }
-
-    .project-tag {
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-
-    .project-card h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.06em;
-      color: var(--white);
-      line-height: 1.1;
-    }
-
-    .project-card p {
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: var(--white-dim);
-      line-height: 1.65;
-      flex: 1;
-    }
-
-    .project-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      margin-top: 0.4rem;
-    }
-
-    .project-stack {
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(192,196,204,0.4);
-    }
-
-    .project-arrow {
-      font-size: 1rem;
-      color: var(--white-dim);
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    /* ── SERVICES ── */
-    #services {
-      background: var(--black-mid);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .services-list { border: 1px solid var(--border-gold); }
-
-    .service-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.5rem;
-      padding: 1.5rem 1.6rem;
-      border-bottom: 1px solid var(--border-gold);
-    }
-    .service-row:last-child { border-bottom: none; }
-
-.service-info strong {
-      display: block;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.25rem;
-    }
-    .service-info p {
-      font-size: 0.83rem;
-      font-weight: 300;
-      color: var(--white-dim);
-      line-height: 1.65;
-    }
-
-    /* ── CONTACT ── */
-    #contact { background: var(--black); }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .contact-block {
-      background: var(--black-card);
-      border: 1px solid var(--border-gold);
-      padding: 1.8rem;
-    }
-
-    .contact-block h3 {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.8rem;
-    }
-
-    .contact-block p {
-      font-size: 0.87rem;
-      font-weight: 300;
-      color: var(--white-dim);
-      margin-bottom: 1.2rem;
-      line-height: 1.65;
-    }
-
-    .contact-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white);
-      text-decoration: none;
-      border-bottom: 1px solid var(--gold);
-      padding-bottom: 0.15rem;
-      transition: color 0.2s;
-    }
-    .contact-link:hover { color: var(--gold); }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 1.5rem;
-      text-align: center;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(201,168,76,0.25);
-    }
-
-    /* ── REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .contact-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-      html { scroll-behavior: auto; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <img src="ccd-horizontal.png" alt="Covenant Creation & Design">
+    <a href="index.html"><img src="ccd-horizontal.png" alt="Covenant Creation & Design"></a>
   </div>
   <ul class="nav-links">
-    <li><a href="#systems-seven">Our Work</a></li>
-    <li><a href="#logos">Branding</a></li>
-    <li><a href="#problems">What We Solve</a></li>
-    <li><a href="#work">Portfolio</a></li>
-    <li><a href="#services">Pricing</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="index.html" aria-current="page">Home</a></li>
+    <li><a href="services.html" >Services</a></li>
+    <li><a href="portfolio.html" >Portfolio</a></li>
+    <li><a href="process.html" >Process</a></li>
+    <li><a href="about.html" >About</a></li>
+    <li><a href="contact.html" >Contact</a></li>
   </ul>
 </nav>
 
@@ -734,13 +43,79 @@
         No online presence. No way to reach your people. A workflow that's eating your time. Whatever the problem, <strong>we build custom digital solutions that actually fix it</strong> — not templates, built for you, from scratch.
       </p>
       <div class="hero-ctas">
-        <a href="#systems-seven" class="btn-primary">See the Work</a>
-        <a href="#contact" class="btn-ghost">Talk to Us</a>
+        <a href="portfolio.html" class="btn-primary">See the Work</a>
+        <a href="contact.html" class="btn-ghost">Talk to Us</a>
       </div>
     </div>
   </div>
 </div>
 
+<!-- WHAT WE SOLVE -->
+<section id="problems">
+  <div class="section-wrap reveal">
+    <div class="section-label">What We Solve</div>
+    <h2>Your problem<br><em>is our starting point.</em></h2>
+    <p class="section-intro">We don't sell websites. We solve problems. Tell us what's not working — we'll build something that fixes it.</p>
+
+    <div class="problems-grid">
+
+      <div class="problem-card">
+        <span class="problem-icon">🏪</span>
+        <h3>"People can't find my business online."</h3>
+        <p>If someone searches for what you do in Bloomsburg or Benton and you don't show up, you're invisible. A professional site with your services, location, and contact info changes that.</p>
+        <div class="solution">We build it → you get found</div>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-icon">⛪</span>
+        <h3>"Our church has no way to communicate with families."</h3>
+        <p>Event calendars, resource libraries, contact forms, ministry information — all in one place families can actually find and use. No more missed announcements.</p>
+        <div class="solution">We build it → families stay connected</div>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-icon">📋</span>
+        <h3>"We're drowning in spreadsheets and paper."</h3>
+        <p>Organizations that track members, schedules, equipment, or resources on paper or in scattered files are losing time every single day. We build custom tools that bring it all into one place.</p>
+        <div class="solution">We build it → the chaos becomes a system</div>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-icon">📅</span>
+        <h3>"We need a way to manage events and sign-ups."</h3>
+        <p>Youth groups, sports teams, nonprofits — if you're using Facebook events and group texts to manage registration, there's a better way. We build it into your site.</p>
+        <div class="solution">We build it → everything runs smoother</div>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-icon">🔧</span>
+        <h3>"I have a workflow that wastes hours every week."</h3>
+        <p>If you're doing something manually that could be automated — scheduling, tracking, messaging, organizing — there's likely a custom tool that could give you those hours back.</p>
+        <div class="solution">We build it → you get your time back</div>
+      </div>
+
+      <div class="problem-card">
+        <span class="problem-icon">👨‍👩‍👧‍👦</span>
+        <h3>"I need something nobody has built before."</h3>
+        <p>Custom apps. Family systems. Organization dashboards. Member portals. If you can describe the problem, we can build the solution — even if nothing like it currently exists.</p>
+        <div class="solution">We build it → exactly what you needed</div>
+      </div>
+
+    </div>
+
+    <div style="background:rgba(201,168,76,0.05);border:1px solid var(--border-gold);padding:1.6rem 1.8rem;">
+      <p style="font-size:0.95rem;color:var(--white-dim);line-height:1.85;">
+        <strong style="color:var(--white);">Not sure if we can help?</strong> Reach out anyway. The first conversation is free, there's no pressure, and the worst that happens is we point you in the right direction. We'd rather tell you honestly what's possible than let a problem keep costing you.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- DIVIDER BANNER 1 -->
+<div style="background:#0D0F14;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <img src="divider-banner-1.png" alt="Built from scratch. Built to last." style="width:100%;display:block;">
+</div>
 
 <!-- SYSTEMS SEVEN SHOWCASE -->
 <section id="systems-seven">
@@ -833,347 +208,42 @@
   </div>
 </section>
 
-<!-- LOGO SHOWCASE -->
-<section id="logos">
-  <div class="section-wrap reveal">
-    <div class="section-label">Logo & Brand Design</div>
-    <h2>Every brand starts<br><em>with a mark.</em></h2>
-    <p class="section-intro">Before we build a website, we make sure the brand behind it is worth showing. Here's a sample of logos and marks we've designed — each one built for a specific client, industry, and purpose.</p>
-
-    <div class="logo-grid">
-
-      <div class="logo-cell">
-        <img src="ccd-badge.png" alt="Covenant Creation & Design">
-        <div class="logo-cell-name">Covenant Creation & Design</div>
-        <div class="logo-cell-type">Web Design Studio</div>
-      </div>
-
-      <div class="logo-cell">
-        <img src="logo-quality-mechanical.png" alt="Quality Mechanical">
-        <div class="logo-cell-name">Quality Mechanical</div>
-        <div class="logo-cell-type">Auto Repair</div>
-      </div>
-
-      <div class="logo-cell">
-        <img src="logo-systems-seven.png" alt="Systems Seven">
-        <div class="logo-cell-name">Systems Seven</div>
-        <div class="logo-cell-type">Family App</div>
-      </div>
-
-      <div class="logo-cell">
-        <img src="logo-homestead.png" alt="The Homestead">
-        <div class="logo-cell-name">The Homestead</div>
-        <div class="logo-cell-type">Family Command Center</div>
-      </div>
-
-      <div class="logo-cell">
-        <img src="logo-noah-elias.png" alt="Noah Elias">
-        <div class="logo-cell-name">Noah Elias</div>
-        <div class="logo-cell-type">Biblical Fiction Author</div>
-      </div>
-
-      <div class="logo-cell">
-        <img src="logo-vineyard.png" alt="The Vineyard">
-        <div class="logo-cell-name">The Vineyard</div>
-        <div class="logo-cell-type">Private Couples App</div>
-      </div>
-
-      <div class="logo-cell">
-        <img src="logo-euroworx.jpg" alt="EuroWorx">
-        <div class="logo-cell-name">EuroWorx</div>
-        <div class="logo-cell-type">eBay Business · Est. 2005</div>
-      </div>
-
-      <div class="logo-cell">
-        <img src="logo-kitchen.png" alt="The Kitchen">
-        <div class="logo-cell-name">The Kitchen</div>
-        <div class="logo-cell-type">Family Recipe & Pantry App</div>
-      </div>
-
-    </div>
-
-    <div style="padding:1.6rem 1.8rem;border:1px solid var(--border-gold);background:rgba(201,168,76,0.04);">
-      <p style="font-size:0.92rem;color:var(--white-dim);line-height:1.85;">
-        <strong style="color:var(--white);">Need a logo?</strong> Whether you're starting from scratch or need a refresh, we design custom marks built for your business — not pulled from a template library. Every logo we make is yours to own completely.
-      </p>
-    </div>
-
-  </div>
-</section>
-
-<!-- WHAT WE SOLVE -->
-<section id="problems">
-  <div class="section-wrap reveal">
-    <div class="section-label">What We Solve</div>
-    <h2>Your problem<br><em>is our starting point.</em></h2>
-    <p class="section-intro">We don't sell websites. We solve problems. Tell us what's not working — we'll build something that fixes it.</p>
-
-    <div class="problems-grid">
-
-      <div class="problem-card">
-        <span class="problem-icon">🏪</span>
-        <h3>"People can't find my business online."</h3>
-        <p>If someone searches for what you do in Bloomsburg or Benton and you don't show up, you're invisible. A professional site with your services, location, and contact info changes that.</p>
-        <div class="solution">We build it → you get found</div>
-      </div>
-
-      <div class="problem-card">
-        <span class="problem-icon">⛪</span>
-        <h3>"Our church has no way to communicate with families."</h3>
-        <p>Event calendars, resource libraries, contact forms, ministry information — all in one place families can actually find and use. No more missed announcements.</p>
-        <div class="solution">We build it → families stay connected</div>
-      </div>
-
-      <div class="problem-card">
-        <span class="problem-icon">📋</span>
-        <h3>"We're drowning in spreadsheets and paper."</h3>
-        <p>Organizations that track members, schedules, equipment, or resources on paper or in scattered files are losing time every single day. We build custom tools that bring it all into one place.</p>
-        <div class="solution">We build it → the chaos becomes a system</div>
-      </div>
-
-      <div class="problem-card">
-        <span class="problem-icon">📅</span>
-        <h3>"We need a way to manage events and sign-ups."</h3>
-        <p>Youth groups, sports teams, nonprofits — if you're using Facebook events and group texts to manage registration, there's a better way. We build it into your site.</p>
-        <div class="solution">We build it → everything runs smoother</div>
-      </div>
-
-      <div class="problem-card">
-        <span class="problem-icon">🔧</span>
-        <h3>"I have a workflow that wastes hours every week."</h3>
-        <p>If you're doing something manually that could be automated — scheduling, tracking, messaging, organizing — there's likely a custom tool that could give you those hours back.</p>
-        <div class="solution">We build it → you get your time back</div>
-      </div>
-
-      <div class="problem-card">
-        <span class="problem-icon">👨‍👩‍👧‍👦</span>
-        <h3>"I need something nobody has built before."</h3>
-        <p>Custom apps. Family systems. Organization dashboards. Member portals. If you can describe the problem, we can build the solution — even if nothing like it currently exists.</p>
-        <div class="solution">We build it → exactly what you needed</div>
-      </div>
-
-    </div>
-
-    <div style="background:rgba(201,168,76,0.05);border:1px solid var(--border-gold);padding:1.6rem 1.8rem;">
-      <p style="font-size:0.95rem;color:var(--white-dim);line-height:1.85;">
-        <strong style="color:var(--white);">Not sure if we can help?</strong> Reach out anyway. The first conversation is free, there's no pressure, and the worst that happens is we point you in the right direction. We'd rather tell you honestly what's possible than let a problem keep costing you.
-      </p>
-    </div>
-
-  </div>
-</section>
-
-<!-- DIVIDER BANNER 1 -->
-<div style="background:#0D0F14;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <img src="divider-banner-1.png" alt="Built from scratch. Built to last." style="width:100%;display:block;">
-</div>
-
-<!-- HOW WE WORK -->
-<section id="how">
-  <div class="section-wrap reveal">
-    <div class="section-label">How We Work</div>
-    <h2>Simple process.<br><em>Real results.</em></h2>
-    <p class="section-intro">No tech jargon. No mystery. You describe your problem, we build the solution, you own it completely.</p>
-
-    <div style="margin-bottom:3rem;border:1px solid var(--border-gold);overflow:hidden;">
-      <img src="process-visual.png" alt="Our four-step process" style="width:100%;display:block;">
-    </div>
-
-    <div class="steps-list">
-      <div class="step-row">
-        <span class="step-num">01</span>
-        <div class="step-content">
-          <strong>You tell us your problem</strong>
-          <p>Text or email us what's not working. It doesn't have to be technical — just describe the situation. We ask a few follow-up questions to understand what you actually need versus what you think you need.</p>
-        </div>
-      </div>
-      <div class="step-row">
-        <span class="step-num">02</span>
-        <div class="step-content">
-          <strong>We scope it and give you a number</strong>
-          <p>No guessing. Before any work starts you get a clear description of what we'll build, what it will cost, and how long it will take. You decide if you want to move forward — no pressure either way.</p>
-        </div>
-      </div>
-      <div class="step-row">
-        <span class="step-num">03</span>
-        <div class="step-content">
-          <strong>We build it, you review it</strong>
-          <p>We build your solution and walk you through it. You tell us what to adjust. We don't consider it done until it actually solves the problem we set out to solve.</p>
-        </div>
-      </div>
-      <div class="step-row">
-        <span class="step-num">04</span>
-        <div class="step-content">
-          <strong>You own it completely</strong>
-          <p>No monthly platform fees, no proprietary lock-in, no holding your site hostage. What we build is yours. Most sites host for free. You keep every dollar your business makes.</p>
-        </div>
-      </div>
-      <div class="step-row">
-        <span class="step-num">05</span>
-        <div class="step-content">
-          <strong>We stay available</strong>
-          <p>Need something changed six months later? Text us. We offer affordable monthly maintenance or simple per-change pricing — whatever works for your situation.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- OTHER PROJECTS -->
-<section id="work">
-  <div class="section-wrap reveal">
-    <div class="section-label">More Projects</div>
-    <h2>Problems solved.<br><em>People served.</em></h2>
-    <p class="section-intro">From local mechanics to regional nonprofits to biblical theology — every project started with a real need.</p>
-
-    <div class="projects-grid">
-
-      <div class="project-card" style="cursor:default;">
-        <span class="project-tag">Small Business</span>
-        <h3>Quality Mechanical</h3>
-        <p>A local automotive business needed a stronger online presence. We built a full brand identity, custom logo, professional site with AI-generated photography, and a direct SMS contact button.</p>
-        <div style="margin-top:0.5rem;border:1px solid var(--border);overflow:hidden;">
-          <img src="qm-screenshot.png" alt="Quality Mechanical website preview" style="width:100%;display:block;">
-        </div>
-        <div class="project-footer">
-          <span class="project-stack">Brand · Web · Photography</span>
-          <span style="font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(192,196,204,0.35);font-style:italic;">Private client</span>
-        </div>
-      </div>
-
-      <a href="https://stewartjm-dev.github.io/traillife-pa1997/" target="_blank" rel="noopener" class="project-card">
-        <span class="project-tag">Youth Organization</span>
-        <h3>Trail Life Troop PA-1997</h3>
-        <p>A youth troop needed a central hub for families — event calendar, photo gallery, fundraiser info, meeting location, and a way to reach people who weren't on social media. Built and deployed.</p>
-        <div style="margin-top:0.5rem;border:1px solid var(--border);overflow:hidden;">
-          <img src="troop-screenshot.png" alt="Trail Life Troop PA-1997 website preview" style="width:100%;display:block;">
-        </div>
-        <div class="project-footer">
-          <span class="project-stack">Multi-Page · Calendar · PWA</span>
-          <span class="project-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="https://stewartjm-dev.github.io/Trail-Life-Northern-Tier/" target="_blank" rel="noopener" class="project-card">
-        <span class="project-tag">Regional Nonprofit</span>
-        <h3>Trail Life Northeast</h3>
-        <p>A regional organization needed to connect multiple troops, share resources, post events, and maintain a directory of leaders. Twelve pages, automated calendar feeds, a gear swap system, and a troop finder.</p>
-        <div style="margin-top:0.5rem;border:1px solid var(--border);overflow:hidden;">
-          <img src="northtier-screenshot.png" alt="Trail Life Northern Tier website preview" style="width:100%;display:block;">
-        </div>
-        <div class="project-footer">
-          <span class="project-stack">12 Pages · API · Google Sheets</span>
-          <span class="project-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="https://stewartjm-dev.github.io/rightly-divided/" target="_blank" rel="noopener" class="project-card">
-        <span class="project-tag">Theology & Publishing</span>
-        <h3>Rightly Divided</h3>
-        <p>A writer and lay minister needed a clean, credible platform to publish a serious theological article series — one that would reach both a general audience and a private inner circle of readers.</p>
-        <div style="margin-top:0.5rem;border:1px solid var(--border);overflow:hidden;">
-          <img src="rightlydivided-screenshot.png" alt="Rightly Divided website preview" style="width:100%;display:block;">
-        </div>
-        <div class="project-footer">
-          <span class="project-stack">Publishing · Dual Audience</span>
-          <span class="project-arrow">→</span>
-        </div>
-      </a>
-
-      <a href="https://noahelias.org" target="_blank" rel="noopener" class="project-card">
-        <span class="project-tag">Author Platform</span>
-        <h3>Noah Elias</h3>
-        <p>A biblical fiction author needed a pre-launch platform to establish credibility before their first book release — brand identity, author site, and a social media strategy built around a September 2026 launch.</p>
-        <div style="margin-top:0.5rem;border:1px solid var(--border);overflow:hidden;">
-          <img src="noahelias-screenshot.png" alt="Noah Elias website preview" style="width:100%;display:block;">
-        </div>
-        <div class="project-footer">
-          <span class="project-stack">Author Brand · Pre-Launch</span>
-          <span class="project-arrow">→</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section id="services">
-  <div class="section-wrap reveal">
-    <div class="section-label">Services & Pricing</div>
-    <h2>What we<br><em>can build for you.</em></h2>
-    <p class="section-intro">Every project is different. Reach out and tell us what you need — we'll put together a free estimate with no obligation.</p>
-
-    <div class="services-list">
-      <div class="service-row">
-        <div class="service-info" style="padding:0.2rem 0;">
-          <strong>Business Websites</strong>
-          <p>Single-page or multi-page sites for local businesses, tradesmen, and sole proprietors. Your services, location, photos, and contact info — professional and easy to find.</p>
-        </div>
-      </div>
-      <div class="service-row">
-        <div class="service-info" style="padding:0.2rem 0;">
-          <strong>Church & Ministry Sites</strong>
-          <p>Event calendars, resource libraries, staff directories, sermon archives, and family communication tools. Everything a congregation needs in one place.</p>
-        </div>
-      </div>
-      <div class="service-row">
-        <div class="service-info" style="padding:0.2rem 0;">
-          <strong>Organization & Nonprofit Platforms</strong>
-          <p>Multi-page platforms for youth groups, clubs, and nonprofits. Member directories, event management, photo galleries, fundraiser pages, and more.</p>
-        </div>
-      </div>
-      <div class="service-row">
-        <div class="service-info" style="padding:0.2rem 0;">
-          <strong>Custom Web Applications</strong>
-          <p>Real-time databases, multi-user tools, family or team dashboards, member portals, booking systems, and anything else that requires a custom-built solution.</p>
-        </div>
-      </div>
-      <div class="service-row">
-        <div class="service-info" style="padding:0.2rem 0;">
-          <strong>Branding & Logo Design</strong>
-          <p>Business name, logo, color scheme, and visual identity — built to look professional across your website, social media, flyers, and signage.</p>
-        </div>
-      </div>
-      <div class="service-row">
-        <div class="service-info" style="padding:0.2rem 0;">
-          <strong>Ongoing Maintenance & Updates</strong>
-          <p>Need something changed after launch? We stay available. Update your hours, swap a photo, add a new page — just send us a message and it gets done.</p>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:2rem;padding:1.8rem;border:1px solid var(--border-gold);background:rgba(201,168,76,0.05);text-align:center;">
-      <p style="font-size:1rem;color:var(--white);font-weight:500;margin-bottom:0.5rem;">Every project starts with a free estimate.</p>
-      <p style="font-size:0.88rem;color:var(--white-dim);line-height:1.8;margin-bottom:1.4rem;">Tell us what you need — we'll tell you exactly what it will cost before any work begins. No pressure, no obligation.</p>
-      <a href="sms:+15703167600" class="btn-primary">Text Us for a Free Estimate</a>
-    </div>
-  </div>
-</section>
-
 <!-- DIVIDER BANNER 2 -->
-<div style="background:#0D0F14;border-bottom:1px solid var(--border);">
+<div style="background:#0D0F14;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <img src="divider-banner-2.png" alt="If you can describe it, we can build it." style="width:100%;display:block;">
 </div>
 
-<!-- CONTACT -->
-<section id="contact">
+<!-- EXPLORE MORE -->
+<section id="explore">
   <div class="section-wrap reveal">
-    <div class="section-label">Get in Touch</div>
-    <h2>Tell us your<br><em>problem.</em></h2>
-    <p class="section-intro">We work with clients locally and across the country. First conversation is always free — no pitch, no pressure.</p>
-
-    <div class="contact-grid">
-      <div class="contact-block">
-        <h3>Send a Text</h3>
-        <p>Fastest way to reach us. Describe what you're dealing with and we'll get back to you same day.</p>
-        <a href="sms:+15703167600" class="contact-link">Text Us →</a>
-      </div>
-      <div class="contact-block">
-        <h3>Send an Email</h3>
-        <p>Prefer email? Send us your situation anytime and we'll respond within 24 hours.</p>
-        <a href="mailto:CovenantCreationandDesign@gmail.com" class="contact-link">CovenantCreationandDesign@gmail.com</a>
-      </div>
+    <div class="section-label">Explore</div>
+    <h2>See how we<br><em>can help you.</em></h2>
+    <div class="page-teasers">
+      <a href="services.html" class="page-teaser">
+        <span class="pt-label">Services</span>
+        <strong>What We Build</strong>
+        <p>Websites, custom web apps, branding, and ongoing maintenance.</p>
+      </a>
+      <a href="portfolio.html" class="page-teaser">
+        <span class="pt-label">Portfolio</span>
+        <strong>Real Projects</strong>
+        <p>Case studies and screenshots from real clients we've helped.</p>
+      </a>
+      <a href="process.html" class="page-teaser">
+        <span class="pt-label">Process</span>
+        <strong>How It Works</strong>
+        <p>From your first message to a finished, working solution.</p>
+      </a>
+      <a href="about.html" class="page-teaser">
+        <span class="pt-label">About</span>
+        <strong>Our Story</strong>
+        <p>Why we build things this way, and who's behind it.</p>
+      </a>
+      <a href="contact.html" class="page-teaser">
+        <span class="pt-label">Contact</span>
+        <strong>Get a Free Estimate</strong>
+        <p>Tell us your problem — no pressure, no obligation.</p>
+      </a>
     </div>
   </div>
 </section>
