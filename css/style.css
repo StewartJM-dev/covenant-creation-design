@@ -144,7 +144,7 @@
       background-size: cover;
       background-position: center center;
       opacity: 0;
-      animation: heroFade 36s infinite;
+      animation: heroFade 42s infinite;
     }
     .hero-slide:nth-child(1) { animation-delay: 0s; }
     .hero-slide:nth-child(2) { animation-delay: 6s; }
@@ -152,12 +152,13 @@
     .hero-slide:nth-child(4) { animation-delay: 18s; }
     .hero-slide:nth-child(5) { animation-delay: 24s; }
     .hero-slide:nth-child(6) { animation-delay: 30s; }
+    .hero-slide:nth-child(7) { animation-delay: 36s; }
 
     @keyframes heroFade {
       0%   { opacity: 0; }
       3%   { opacity: 1; }
-      14%  { opacity: 1; }
-      17%  { opacity: 0; }
+      11%  { opacity: 1; }
+      14%  { opacity: 0; }
       100% { opacity: 0; }
     }
 
