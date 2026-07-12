@@ -10,6 +10,14 @@
 </head>
 <body>
 
+<script>
+  // Force scroll-to-top on load, overriding any leftover #anchor from
+  // the site's old single-page structure (e.g. an old bookmark to
+  // #systems-seven or #contact) or the browser's own scroll restoration.
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+</script>
+
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
