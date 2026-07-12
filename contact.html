@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Covenant Creation & Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="ccd-horizontal.png" alt="Covenant Creation & Design"></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" >Home</a></li>
+    <li><a href="services.html" >Services</a></li>
+    <li><a href="portfolio.html" >Portfolio</a></li>
+    <li><a href="process.html" >Process</a></li>
+    <li><a href="about.html" >About</a></li>
+    <li><a href="contact.html" aria-current="page">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-wrap reveal">
+    <div class="section-label">Get in Touch</div>
+    <h2>Tell us your<br><em>problem.</em></h2>
+    <p class="section-intro">We work with clients locally and across the country. First conversation is always free — no pitch, no pressure.</p>
+
+    <div class="contact-grid">
+      <div class="contact-block">
+        <h3>Send a Text</h3>
+        <p>Fastest way to reach us. Describe what you're dealing with and we'll get back to you same day.</p>
+        <a href="sms:+15703167600" class="contact-link">Text Us →</a>
+      </div>
+      <div class="contact-block">
+        <h3>Send an Email</h3>
+        <p>Prefer email? Send us your situation anytime and we'll respond within 24 hours.</p>
+        <a href="mailto:CovenantCreationandDesign@gmail.com" class="contact-link">CovenantCreationandDesign@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE REQUEST FORM -->
+<section id="quote">
+  <div class="section-wrap reveal">
+    <div class="section-label">Free Estimate</div>
+    <h2>Request a<br><em>quote.</em></h2>
+    <p class="section-intro">Fill this out and it'll open an email to us, pre-filled with your answers. No obligation — we'll follow up with honest next steps.</p>
+
+    <form class="quote-form" id="quote-form">
+      <div class="quote-field">
+        <label for="q-name">Name</label>
+        <input type="text" id="q-name" name="name" required>
+      </div>
+      <div class="quote-field">
+        <label for="q-contact">Best way to reach you (phone or email)</label>
+        <input type="text" id="q-contact" name="contact" required>
+      </div>
+      <div class="quote-field">
+        <label for="q-business">Business or organization (if any)</label>
+        <input type="text" id="q-business" name="business">
+      </div>
+      <div class="quote-field">
+        <label for="q-project">What do you need?</label>
+        <textarea id="q-project" name="project" required placeholder="A new website, a custom app, a logo, help with something already built — describe it however makes sense to you."></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="border:none;cursor:pointer;">Send Quote Request</button>
+      <p class="quote-note">This opens your email app with a message addressed to us, filled in with what you entered above.</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  document.getElementById('quote-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('q-name').value.trim();
+    var contact = document.getElementById('q-contact').value.trim();
+    var business = document.getElementById('q-business').value.trim();
+    var project = document.getElementById('q-project').value.trim();
+
+    var subject = 'Quote Request — Covenant Creation & Design';
+    var bodyLines = [
+      'Name: ' + name,
+      'Best contact: ' + contact,
+      business ? 'Business/Org: ' + business : '',
+      '',
+      'What they need:',
+      project
+    ].filter(Boolean);
+
+    var mailto = 'mailto:CovenantCreationandDesign@gmail.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(bodyLines.join('\n'));
+
+    window.location.href = mailto;
+  });
+</script>
+
+<!-- FOOTER -->
+<footer>
+  Covenant Creation &amp; Design &nbsp;·&nbsp; Built to Last &nbsp;·&nbsp; Serving Clients Everywhere
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
