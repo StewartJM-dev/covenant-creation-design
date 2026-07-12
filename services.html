@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services — Covenant Creation & Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="ccd-horizontal.png" alt="Covenant Creation & Design"></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" >Home</a></li>
+    <li><a href="services.html" aria-current="page">Services</a></li>
+    <li><a href="portfolio.html" >Portfolio</a></li>
+    <li><a href="process.html" >Process</a></li>
+    <li><a href="about.html" >About</a></li>
+    <li><a href="contact.html" >Contact</a></li>
+  </ul>
+</nav>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-wrap reveal">
+    <div class="section-label">Services & Pricing</div>
+    <h2>What we<br><em>can build for you.</em></h2>
+    <p class="section-intro">Every project is different. Reach out and tell us what you need — we'll put together a free estimate with no obligation.</p>
+
+    <div class="services-list">
+      <div class="service-row">
+        <div class="service-info" style="padding:0.2rem 0;">
+          <strong>Business Websites</strong>
+          <p>Single-page or multi-page sites for local businesses, tradesmen, and sole proprietors. Your services, location, photos, and contact info — professional and easy to find.</p>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-info" style="padding:0.2rem 0;">
+          <strong>Church & Ministry Sites</strong>
+          <p>Event calendars, resource libraries, staff directories, sermon archives, and family communication tools. Everything a congregation needs in one place.</p>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-info" style="padding:0.2rem 0;">
+          <strong>Organization & Nonprofit Platforms</strong>
+          <p>Multi-page platforms for youth groups, clubs, and nonprofits. Member directories, event management, photo galleries, fundraiser pages, and more.</p>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-info" style="padding:0.2rem 0;">
+          <strong>Custom Web Applications</strong>
+          <p>Real-time databases, multi-user tools, family or team dashboards, member portals, booking systems, and anything else that requires a custom-built solution.</p>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-info" style="padding:0.2rem 0;">
+          <strong>Branding & Logo Design</strong>
+          <p>Business name, logo, color scheme, and visual identity — built to look professional across your website, social media, flyers, and signage.</p>
+        </div>
+      </div>
+      <div class="service-row">
+        <div class="service-info" style="padding:0.2rem 0;">
+          <strong>Ongoing Maintenance & Updates</strong>
+          <p>Need something changed after launch? We stay available. Update your hours, swap a photo, add a new page — just send us a message and it gets done.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;padding:1.8rem;border:1px solid var(--border-gold);background:rgba(201,168,76,0.05);text-align:center;">
+      <p style="font-size:1rem;color:var(--white);font-weight:500;margin-bottom:0.5rem;">Every project starts with a free estimate.</p>
+      <p style="font-size:0.88rem;color:var(--white-dim);line-height:1.8;margin-bottom:1.4rem;">Tell us what you need — we'll tell you exactly what it will cost before any work begins. No pressure, no obligation.</p>
+      <a href="sms:+15703167600" class="btn-primary">Text Us for a Free Estimate</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Covenant Creation &amp; Design &nbsp;·&nbsp; Built to Last &nbsp;·&nbsp; Serving Clients Everywhere
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
