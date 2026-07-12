@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logos & Branding — Covenant Creation & Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<script>
+  // Force scroll-to-top on load, overriding any leftover #anchor from
+  // the site's old single-page structure (e.g. an old bookmark to
+  // #systems-seven or #contact) or the browser's own scroll restoration.
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+</script>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="ccd-horizontal.png" alt="Covenant Creation & Design"></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="logos.html" aria-current="page">Logos</a></li>
+    <li><a href="process.html">Process</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- LOGO SHOWCASE -->
+<section id="logos">
+  <div class="section-wrap reveal">
+    <div class="section-label">Logo & Brand Design</div>
+    <h2>Every brand starts<br><em>with a mark.</em></h2>
+    <p class="section-intro">Before we build a website, we make sure the brand behind it is worth showing. Here's a sample of logos and marks we've designed — each one built for a specific client, industry, and purpose.</p>
+
+    <div class="logo-grid">
+
+      <div class="logo-cell">
+        <img src="ccd-badge.png" alt="Covenant Creation & Design">
+        <div class="logo-cell-name">Covenant Creation & Design</div>
+        <div class="logo-cell-type">Web Design Studio</div>
+      </div>
+
+      <div class="logo-cell">
+        <img src="logo-quality-mechanical.png" alt="Quality Mechanical">
+        <div class="logo-cell-name">Quality Mechanical</div>
+        <div class="logo-cell-type">Auto Repair</div>
+      </div>
+
+      <div class="logo-cell">
+        <img src="logo-systems-seven.png" alt="Systems Seven">
+        <div class="logo-cell-name">Systems Seven</div>
+        <div class="logo-cell-type">Family App</div>
+      </div>
+
+      <div class="logo-cell">
+        <img src="logo-homestead.png" alt="The Homestead">
+        <div class="logo-cell-name">The Homestead</div>
+        <div class="logo-cell-type">Family Command Center</div>
+      </div>
+
+      <div class="logo-cell">
+        <img src="logo-noah-elias.png" alt="Noah Elias">
+        <div class="logo-cell-name">Noah Elias</div>
+        <div class="logo-cell-type">Biblical Fiction Author</div>
+      </div>
+
+      <div class="logo-cell">
+        <img src="logo-vineyard.png" alt="The Vineyard">
+        <div class="logo-cell-name">The Vineyard</div>
+        <div class="logo-cell-type">Private Couples App</div>
+      </div>
+
+      <div class="logo-cell">
+        <img src="logo-euroworx.jpg" alt="EuroWorx">
+        <div class="logo-cell-name">EuroWorx</div>
+        <div class="logo-cell-type">eBay Business · Est. 2005</div>
+      </div>
+
+      <div class="logo-cell">
+        <img src="logo-kitchen.png" alt="The Kitchen">
+        <div class="logo-cell-name">The Kitchen</div>
+        <div class="logo-cell-type">Family Recipe & Pantry App</div>
+      </div>
+
+    </div>
+
+    <div style="padding:1.6rem 1.8rem;border:1px solid var(--border-gold);background:rgba(201,168,76,0.04);">
+      <p style="font-size:0.92rem;color:var(--white-dim);line-height:1.85;">
+        <strong style="color:var(--white);">Need a logo?</strong> Whether you're starting from scratch or need a refresh, we design custom marks built for your business — not pulled from a template library. Every logo we make is yours to own completely.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Covenant Creation &amp; Design &nbsp;·&nbsp; Built to Last &nbsp;·&nbsp; Serving Clients Everywhere
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
