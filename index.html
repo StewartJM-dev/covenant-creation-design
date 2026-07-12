@@ -78,7 +78,7 @@
     .hero-slideshow {
       position: absolute;
       inset: 0;
-      z-index: -2;
+      z-index: 1;
       overflow: hidden;
     }
     .hero-slide {
@@ -105,13 +105,18 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      z-index: -1;
+      z-index: 2;
       background: linear-gradient(180deg, rgba(17,19,24,0.90) 0%, rgba(17,19,24,0.74) 42%, rgba(17,19,24,0.94) 100%);
     }
 
     @media (prefers-reduced-motion: reduce) {
       .hero-slide { animation: none; opacity: 0; }
       .hero-slide:first-child { opacity: 1; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
     }
 
     .hero-eyebrow {
@@ -721,15 +726,17 @@
       <div class="hero-slide" style="background-image:url('noahelias-screenshot.png');"></div>
     </div>
     <div class="hero-overlay" aria-hidden="true"></div>
-    <div class="hero-eyebrow">Covenant Creation & Design</div>
-    <h1>YOU HAVE<br>A PROBLEM.<br><em>WE BUILD<br>THE SOLUTION.</em></h1>
-    <div class="hero-rule"></div>
-    <p class="hero-sub">
-      No online presence. No way to reach your people. A workflow that's eating your time. Whatever the problem, <strong>we build custom digital solutions that actually fix it</strong> — not templates, built for you, from scratch.
-    </p>
-    <div class="hero-ctas">
-      <a href="#systems-seven" class="btn-primary">See the Work</a>
-      <a href="#contact" class="btn-ghost">Talk to Us</a>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Covenant Creation & Design</div>
+      <h1>YOU HAVE<br>A PROBLEM.<br><em>WE BUILD<br>THE SOLUTION.</em></h1>
+      <div class="hero-rule"></div>
+      <p class="hero-sub">
+        No online presence. No way to reach your people. A workflow that's eating your time. Whatever the problem, <strong>we build custom digital solutions that actually fix it</strong> — not templates, built for you, from scratch.
+      </p>
+      <div class="hero-ctas">
+        <a href="#systems-seven" class="btn-primary">See the Work</a>
+        <a href="#contact" class="btn-ghost">Talk to Us</a>
+      </div>
     </div>
   </div>
 </div>
