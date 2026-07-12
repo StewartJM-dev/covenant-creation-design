@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Covenant Creation & Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="ccd-horizontal.png" alt="Covenant Creation & Design"></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" >Home</a></li>
+    <li><a href="services.html" >Services</a></li>
+    <li><a href="portfolio.html" >Portfolio</a></li>
+    <li><a href="process.html" >Process</a></li>
+    <li><a href="about.html" aria-current="page">About</a></li>
+    <li><a href="contact.html" >Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap reveal">
+    <div class="section-label">About</div>
+    <h2>We started because<br><em>we needed this ourselves.</em></h2>
+
+    <div class="about-photo-row">
+      <div class="about-photo">JS</div>
+      <div style="flex:1;min-width:240px;">
+        <p style="font-size:0.97rem;color:var(--white-dim);line-height:1.85;margin-bottom:1.2rem;">
+          Covenant Creation &amp; Design isn't run by a tech company. It's run by a mechanic and shop foreman who happened to need a real solution for a real problem — and built it himself when nothing off-the-shelf came close.
+        </p>
+        <p style="font-size:0.97rem;color:var(--white-dim);line-height:1.85;margin-bottom:1.2rem;">
+          That problem was managing a busy household: four boys, a homeschool schedule, a Trail Life troop, and a family calendar that lived in a dozen different places at once. So a full system got built from scratch — Systems Seven — the same kind of custom tool you'll find in the portfolio.
+        </p>
+        <p style="font-size:0.97rem;color:var(--white-dim);line-height:1.85;">
+          That's the whole approach here: listen to what's actually broken, and build the thing that actually fixes it. Not a template with your logo slapped on it — a solution built around your specific problem, the same way Systems Seven was built around ours.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-values">
+      <div class="about-value">
+        <strong>No Templates</strong>
+        <p>Every project starts from your problem, not from a theme library. What gets built is built for you.</p>
+      </div>
+      <div class="about-value">
+        <strong>You Own It, Completely</strong>
+        <p>No monthly platform fees, no proprietary lock-in. What we build is yours — free to host, free to keep.</p>
+      </div>
+      <div class="about-value">
+        <strong>Honest Pricing, No Surprises</strong>
+        <p>You get a clear cost and timeline before any work begins. No guessing, no pressure to say yes.</p>
+      </div>
+      <div class="about-value">
+        <strong>We Stay Available</strong>
+        <p>Launch day isn't the end. Need something changed six months later? Just send a message.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem;padding:1.8rem;border:1px solid var(--border-gold);background:rgba(201,168,76,0.05);text-align:center;">
+      <p style="font-size:1rem;color:var(--white);font-weight:500;margin-bottom:0.5rem;">Have a problem worth solving?</p>
+      <p style="font-size:0.88rem;color:var(--white-dim);line-height:1.8;margin-bottom:1.4rem;">Tell us what's not working. The first conversation is free.</p>
+      <a href="contact.html" class="btn-primary">Talk to Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Covenant Creation &amp; Design &nbsp;·&nbsp; Built to Last &nbsp;·&nbsp; Serving Clients Everywhere
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
