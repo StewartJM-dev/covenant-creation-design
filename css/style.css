@@ -283,7 +283,7 @@
       .hero-ctas { order: 3; margin-top: 1.5rem; }
     }
 
-    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; position: relative; z-index: 3; }
 
     .btn-primary {
       display: inline-flex;
