@@ -264,11 +264,21 @@
     }
 
     @media (max-width: 780px) {
+      .hero {
+        justify-content: flex-start;
+        overflow: visible;
+        min-height: 0;
+        padding-top: 3rem;
+      }
+      .hero-content { order: 1; }
       .hero-sub-logos {
-        right: 16px;
-        bottom: 24px;
-        width: clamp(140px, 34vw, 200px);
-        height: clamp(140px, 34vw, 200px);
+        order: 2;
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin: 1.5rem 0 0 auto;
+        width: clamp(110px, 30vw, 160px);
+        height: clamp(110px, 30vw, 160px);
       }
     }
 
