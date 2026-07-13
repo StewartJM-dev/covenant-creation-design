@@ -280,6 +280,7 @@
         width: clamp(110px, 30vw, 160px);
         height: clamp(110px, 30vw, 160px);
       }
+      .hero-ctas { order: 3; margin-top: 1.5rem; }
     }
 
     .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
@@ -857,4 +858,5 @@
 @media (max-width: 560px) {
   .page-pager { flex-direction: column; }
   .pager-link { max-width: none; }
+  .pager-next { margin-left: 0; justify-content: flex-start; text-align: left; }
 }
