@@ -878,7 +878,7 @@
       transition: color 0.2s;
     }
     .footer-contact a:hover { color: var(--gold); }
-    .footer-area { font-size: 0.72rem; color: rgba(201,168,76,0.4); margin-top: 0.3rem; }
+    .footer-area { font-size: 0.72rem; color: rgba(201,168,76,0.75); margin-top: 0.3rem; }
     .footer-bottom {
       max-width: 1000px;
       margin: 0 auto;
@@ -887,7 +887,7 @@
       font-size: 0.68rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: rgba(201,168,76,0.25);
+      color: rgba(201,168,76,0.65);
       text-align: center;
     }
     @media (max-width: 700px) {
