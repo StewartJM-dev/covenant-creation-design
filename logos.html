@@ -6,6 +6,19 @@
   <title>Logos & Branding — Covenant Creation & Design</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://covenantcreationanddesign.com/logos.html"/>
+  <meta name="description" content="Custom logo and brand design for businesses, ministries, and organizations — every mark built from scratch, never pulled from a template."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://covenantcreationanddesign.com/logos.html"/>
+  <meta property="og:title" content="Logos & Branding — Covenant Creation & Design"/>
+  <meta property="og:description" content="Custom logo and brand design for businesses, ministries, and organizations — every mark built from scratch, never pulled from a template."/>
+  <meta property="og:image" content="https://covenantcreationanddesign.com/og-banner.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Logos & Branding — Covenant Creation & Design"/>
+  <meta name="twitter:description" content="Custom logo and brand design for businesses, ministries, and organizations — every mark built from scratch, never pulled from a template."/>
+  <meta name="twitter:image" content="https://covenantcreationanddesign.com/og-banner.jpg"/>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -23,7 +36,10 @@
   <div class="nav-logo">
     <a href="index.html"><img src="ccd-horizontal.png" alt="Covenant Creation & Design"></a>
   </div>
-  <ul class="nav-links">
+  <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav-links" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="site-nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="portfolio.html">Portfolio</a></li>
@@ -33,6 +49,7 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
+<div class="nav-scrim" id="nav-scrim"></div>
 
 <!-- LOGO SHOWCASE -->
 <section id="logos">
@@ -116,10 +133,56 @@
 
 <!-- FOOTER -->
 <footer>
-  Covenant Creation &amp; Design &nbsp;·&nbsp; Built to Last &nbsp;·&nbsp; Serving Clients Everywhere
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="ccd-horizontal.png" alt="Covenant Creation & Design" class="footer-logo">
+      <p class="footer-tagline">An independent design and development studio led by John Stewart.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="logos.html">Logos</a>
+      <a href="process.html">Process</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="footer-contact">
+      <a href="mailto:CovenantCreationandDesign@gmail.com">CovenantCreationandDesign@gmail.com</a>
+      <a href="sms:+15703167600">Text: (570) 316-7600</a>
+      <span class="footer-area">Serving clients everywhere &middot; Based in Bloomsburg, PA</span>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 Covenant Creation &amp; Design. All rights reserved.</div>
 </footer>
 
 <script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('site-nav-links');
+  const navScrim = document.getElementById('nav-scrim');
+  function closeNav() {
+    navToggle.setAttribute('aria-expanded', 'false');
+    navLinks.classList.remove('open');
+    navScrim.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+  function openNav() {
+    navToggle.setAttribute('aria-expanded', 'true');
+    navLinks.classList.add('open');
+    navScrim.classList.add('open');
+    document.body.classList.add('nav-open');
+  }
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
+      isOpen ? closeNav() : openNav();
+    });
+    navScrim.addEventListener('click', closeNav);
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+  }
+
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
