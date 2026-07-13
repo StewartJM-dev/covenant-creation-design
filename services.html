@@ -25,6 +25,24 @@
 <body>
 
 <script>
+  // Exit-intent popup (desktop only — no reliable mobile equivalent)
+  (function(){
+    if (sessionStorage.getItem('exitIntentShown')) return;
+    let triggered = false;
+    document.addEventListener('mouseleave', function(e){
+      if (e.clientY <= 0 && !triggered) {
+        triggered = true;
+        sessionStorage.setItem('exitIntentShown', '1');
+        const overlay = document.getElementById('exit-intent-overlay');
+        if (overlay) overlay.style.display = 'flex';
+      }
+    });
+  })();
+  function closeExitIntent(){
+    const overlay = document.getElementById('exit-intent-overlay');
+    if (overlay) overlay.style.display = 'none';
+  }
+
   // Force scroll-to-top on load, overriding any leftover #anchor from
   // the site's old single-page structure (e.g. an old bookmark to
   // #systems-seven or #contact) or the browser's own scroll restoration.
@@ -148,6 +166,20 @@
   </div>
   <div class="footer-bottom">&copy; 2026 Covenant Creation &amp; Design. All rights reserved.</div>
 </footer>
+
+<!-- EXIT INTENT -->
+<div id="exit-intent-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+  <div style="max-width:420px;width:100%;background:var(--black);border:1px solid var(--border-gold);border-radius:4px;padding:2.4rem 2rem;text-align:center;position:relative;">
+    <button onclick="closeExitIntent()" aria-label="Close" style="position:absolute;top:10px;right:14px;background:none;border:none;color:var(--white-dim);font-size:1.6rem;cursor:pointer;line-height:1;">&times;</button>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--white);margin-bottom:0.9rem;letter-spacing:0.02em;">WAIT &mdash; BEFORE YOU GO</div>
+    <p style="font-size:0.95rem;color:var(--white-dim);line-height:1.75;margin-bottom:1.6rem;">
+      Request a free quote, or just tell us about your idea. <strong style="color:var(--white);">We won't spam your inbox</strong> like other companies do &mdash; one honest conversation, no pressure.
+    </p>
+    <a href="contact.html" class="btn-primary" style="width:100%;justify-content:center;margin-bottom:0.9rem;" onclick="closeExitIntent()">Get a Free Quote</a>
+    <button onclick="closeExitIntent()" style="background:none;border:none;color:var(--white-dim);font-size:0.78rem;text-decoration:underline;cursor:pointer;letter-spacing:0.03em;">No thanks, continue browsing</button>
+  </div>
+</div>
+
 
 <script>
   // Mobile nav toggle
