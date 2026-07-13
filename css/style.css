@@ -821,29 +821,28 @@
   align-items: center;
   gap: 0.7rem;
   text-decoration: none;
-  color: var(--white);
+  color: var(--black);
   padding: 0.9rem 1.1rem;
-  background: rgba(201,168,76,0.08);
-  border: 1px solid var(--border-gold);
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  transition: background 0.2s;
   flex: 1;
   max-width: 280px;
 }
-.pager-link:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
-.pager-link:hover .pager-arrow,
-.pager-link:hover .pager-label { color: var(--black); }
+.pager-link:hover { background: var(--gold-light); }
 .pager-prev { justify-content: flex-start; }
 .pager-next { justify-content: flex-end; text-align: right; margin-left: auto; }
-.pager-arrow { color: var(--gold); font-size: 1.15rem; flex-shrink: 0; }
+.pager-arrow { color: var(--black); font-size: 1.15rem; flex-shrink: 0; }
 .pager-label {
   display: block;
   font-size: 0.6rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--black);
   margin-bottom: 0.25rem;
+  opacity: 0.75;
 }
-.pager-text strong { display: block; font-size: 0.92rem; font-weight: 500; }
+.pager-text strong { display: block; font-size: 0.92rem; font-weight: 500; color: var(--black); }
 
 @media (max-width: 560px) {
   .page-pager { flex-direction: column; }
