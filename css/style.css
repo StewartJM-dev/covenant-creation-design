@@ -605,6 +605,27 @@
       gap: 2.5rem;
     }
 
+    .ss-hero-shot {
+      margin: 2rem 0 2.5rem;
+      background: var(--black-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+      position: relative;
+    }
+    .ss-hero-shot::before {
+      content: '';
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .ss-hero-shot img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
     .ss-preview-card {
       background: var(--black-card);
       border: 1px solid var(--border-gold);
